@@ -17,13 +17,13 @@ def makedirs(path):
 # Load the YOLOv8 model
 # model = YOLO('C:\\workspace\\maketek\\runs\\detect\\train3\\weights\\best.pt')  # pretrained YOLOv8n model
 # model = YOLO('C:/Users/admin/Downloads/yolov81/yolov8/yolov8n.pt')  # pretrained YOLOv8n model
-model = YOLO('C:\\workspace\\code\\best.pt')  # pretrained YOLOv8n model
+model = YOLO('best.pt')  # pretrained YOLOv8n model
         
 
 # Open the video file
 # video_path = "C:\\workspace\\maketek\\deform_spot__output_02.mp4"
 # video_path = "C:\\workspace\\maketek\\raw_output_03.mp4"
-cap = cv2.VideoCapture(0)
+cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)
 
 # Loop through the video frames
 while cap.isOpened():
@@ -43,7 +43,9 @@ while cap.isOpened():
         annotated_frame = results[0].plot()
 
         # Display the annotated frame
-        cv2.imshow("YOLOv8 Inference", annotated_frame)
+        imS = cv2.resize(annotated_frame, (960, 960)) 
+        cv2.imshow("YOLOv8 Inference", imS)
+        # cv2.imshow("YOLOv8 Inference", annotated_frame)
 
         # Make folders if not exsist
         path='C:\\workspace\\code\\detect_image\\'+date.format_date()+'\\'

@@ -1,7 +1,8 @@
 import cv2
+from ultralytics import YOLO
 
 # Open webcam
-cap = cv2.VideoCapture(0)
+cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)
 
 
 if __name__ == '__main__':

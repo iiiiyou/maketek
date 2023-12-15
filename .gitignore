@@ -160,7 +160,5 @@ cython_debug/
 #.idea/
 
 
-yolov8m.pt
-yolov8m-seg.pt
-raw_output_03.mp4
-deform_spot__output_02.mp4
+*.pt
+*.mp4

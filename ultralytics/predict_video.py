@@ -3,7 +3,7 @@ from ultralytics import YOLO
 
 # Load the YOLOv8 model
 # model = YOLO('C:\\workspace\\maketek\\runs\\detect\\train3\\weights\\best.pt')  # pretrained YOLOv8n model
-model = YOLO('C:\\workspace\\maketek\\runs\\segment\\train\\weights\\best.pt')  # pretrained YOLOv8n model
+model = YOLO('best.pt')  # pretrained YOLOv8n model
 
 # Open the video file
 # video_path = "C:\\workspace\\maketek\\deform_spot__output_02.mp4"
@@ -19,7 +19,7 @@ while cap.isOpened():
         # Run YOLOv8 inference on the frame
         # results = model(frame)
         # Run inference on 'bus.jpg' with arguments
-        results = model.predict(frame, save=False, imgsz=1080, conf=0.5)
+        results = model.predict(frame, save=False, imgsz=1080, conf=0.85)
 
         # Visualize the results on the frame
         annotated_frame = results[0].plot()
