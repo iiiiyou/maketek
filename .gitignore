@@ -159,9 +159,11 @@ cython_debug/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
 
+dataset
+runs
+detect_images
 
 *.pt
 *.mp4
 !deform_spot__output_02.mp4
-runs/
 !best.pt

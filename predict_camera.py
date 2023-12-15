@@ -15,14 +15,10 @@ def makedirs(path):
 
 
 # Load the YOLOv8 model
-# model = YOLO('C:\\workspace\\maketek\\runs\\detect\\train3\\weights\\best.pt')  # pretrained YOLOv8n model
-# model = YOLO('C:/Users/admin/Downloads/yolov81/yolov8/yolov8n.pt')  # pretrained YOLOv8n model
 model = YOLO('model\\best.pt')  # pretrained YOLOv8n model
         
 
 # Open the video file
-# video_path = "C:\\workspace\\maketek\\deform_spot__output_02.mp4"
-# video_path = "C:\\workspace\\maketek\\raw_output_03.mp4"
 cap = cv2.VideoCapture(0)
 
 # Loop through the video frames
@@ -34,7 +30,7 @@ while cap.isOpened():
         # Run YOLOv8 inference on the frame
         # results = model(frame)
         # Run inference on 'bus.jpg' with arguments
-        results = model.predict(frame, save=False, imgsz=1080, conf=0.5)
+        results = model.predict(frame, save=False, imgsz=1080, conf=0.75)
         result = results[0]
 
         print(result)
@@ -52,7 +48,7 @@ while cap.isOpened():
         makedirs(path)
 
         # Saving images
-        # cv2.imwrite('C:\\workspace\\code\\detect_image\\'+date.format_date()+'\\'+date.get_time_in_mmddss()+'.jpg', annotated_frame)
+        # cv2.imwrite('detect_images\\'+date.format_date()+'\\'+date.get_time_in_mmddss()+'.jpg', annotated_frame)
 
         # Modbus write
         if(len(result.boxes)!=0):
