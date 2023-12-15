@@ -1,10 +1,24 @@
 import cv2
 from ultralytics import YOLO
 import format_date_time as date
+import LS_Modbus_copy as modbus
+import os
+
+
+# Make folders if not exsist
+def makedirs(path):
+    try:
+        if not os.path.exists(path):
+            os.makedirs(path)
+    except OSError:
+        print("Error: Failed to create the directory.")
+
 
 # Load the YOLOv8 model
 # model = YOLO('C:\\workspace\\maketek\\runs\\detect\\train3\\weights\\best.pt')  # pretrained YOLOv8n model
+# model = YOLO('C:/Users/admin/Downloads/yolov81/yolov8/yolov8n.pt')  # pretrained YOLOv8n model
 model = YOLO('C:/Users/admin/Downloads/yolov81/yolov8/best.pt')  # pretrained YOLOv8n model
+        
 
 # Open the video file
 # video_path = "C:\\workspace\\maketek\\deform_spot__output_02.mp4"
@@ -21,6 +35,9 @@ while cap.isOpened():
         # results = model(frame)
         # Run inference on 'bus.jpg' with arguments
         results = model.predict(frame, save=False, imgsz=1080, conf=0.5)
+        result = model(frame)[0]
+
+        print(result)
 
         # Visualize the results on the frame
         annotated_frame = results[0].plot()
@@ -28,7 +45,29 @@ while cap.isOpened():
         # Display the annotated frame
         cv2.imshow("YOLOv8 Inference", annotated_frame)
 
-        cv2.imwrite(date.get_time_in_mmddss()+'.jpg',annotated_frame)
+        # Make folders if not exsist
+        path='C:/Users/admin/Downloads/yolov81/yolov8/'+date.format_date()+'/'
+        makedirs(path)
+
+        # Saving images
+        cv2.imwrite('C:/Users/admin/Downloads/yolov81/yolov8/'+date.format_date()+'/'+date.get_time_in_mmddss()+'.jpg', annotated_frame)
+
+        # Modbus write
+        if(len(result.boxes)!=0):
+            cords = result.boxes.xyxy[0].tolist()
+            cords = [round(x) for x in cords]
+            start = cords[0:2]  # x1,y1
+
+            start.insert(0,1)
+
+            print("-----------------------")
+            print(start)
+
+            modbus.write_detected(start)
+        else:
+            # Break the loop if the end of the video is reached
+            print('no detacted')
+            modbus.write_detected([0,0,0])
 
         # Break the loop if 'q' is pressed
         if cv2.waitKey(1) & 0xFF == ord("q"):
@@ -40,3 +79,4 @@ while cap.isOpened():
 # Release the video capture object and close the display window
 cap.release()
 cv2.destroyAllWindows()
+
