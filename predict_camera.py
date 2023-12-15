@@ -17,7 +17,7 @@ def makedirs(path):
 # Load the YOLOv8 model
 # model = YOLO('C:\\workspace\\maketek\\runs\\detect\\train3\\weights\\best.pt')  # pretrained YOLOv8n model
 # model = YOLO('C:/Users/admin/Downloads/yolov81/yolov8/yolov8n.pt')  # pretrained YOLOv8n model
-model = YOLO('C:\\workspace\\maketek\\runs\\segment\\train\\weights\\best.pt')  # pretrained YOLOv8n model
+model = YOLO('model\\best.pt')  # pretrained YOLOv8n model
         
 
 # Open the video file
