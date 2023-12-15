@@ -25,7 +25,9 @@ def write_detected(values):
     client = ModbusTcpClient("192.168.1.2", port=502)
     return1 = client.write_registers(0x0900,val,1)
     client.close()
+    print("modbus--------------sss")
     print(return1)
+    print("modbusend---------------")
     return True
   except Exception as e:
     print(e)
@@ -40,4 +42,3 @@ def write_detected(values):
 # write_detected('',[x,y])
 
 # client.close()
-

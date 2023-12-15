@@ -1,7 +1,7 @@
 import cv2
 from ultralytics import YOLO
 import format_date_time as date
-import LS_Modbus_copy as modbus
+import LS_Modbus as modbus
 import os
 
 
@@ -17,7 +17,7 @@ def makedirs(path):
 # Load the YOLOv8 model
 # model = YOLO('C:\\workspace\\maketek\\runs\\detect\\train3\\weights\\best.pt')  # pretrained YOLOv8n model
 # model = YOLO('C:/Users/admin/Downloads/yolov81/yolov8/yolov8n.pt')  # pretrained YOLOv8n model
-model = YOLO('C:/Users/admin/Downloads/yolov81/yolov8/best.pt')  # pretrained YOLOv8n model
+model = YOLO('C:\\workspace\\code\\best.pt')  # pretrained YOLOv8n model
         
 
 # Open the video file
@@ -35,7 +35,7 @@ while cap.isOpened():
         # results = model(frame)
         # Run inference on 'bus.jpg' with arguments
         results = model.predict(frame, save=False, imgsz=1080, conf=0.5)
-        result = model(frame)[0]
+        result = results[0]
 
         print(result)
 
@@ -46,11 +46,11 @@ while cap.isOpened():
         cv2.imshow("YOLOv8 Inference", annotated_frame)
 
         # Make folders if not exsist
-        path='C:/Users/admin/Downloads/yolov81/yolov8/'+date.format_date()+'/'
+        path='C:\\workspace\\code\\detect_image\\'+date.format_date()+'\\'
         makedirs(path)
 
         # Saving images
-        cv2.imwrite('C:/Users/admin/Downloads/yolov81/yolov8/'+date.format_date()+'/'+date.get_time_in_mmddss()+'.jpg', annotated_frame)
+        # cv2.imwrite('C:\\workspace\\code\\detect_image\\'+date.format_date()+'\\'+date.get_time_in_mmddss()+'.jpg', annotated_frame)
 
         # Modbus write
         if(len(result.boxes)!=0):
@@ -79,4 +79,3 @@ while cap.isOpened():
 # Release the video capture object and close the display window
 cap.release()
 cv2.destroyAllWindows()
-

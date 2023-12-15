@@ -240,14 +240,18 @@ def alignment(val):
     if(val[0]==0):
         x=0
         y=0
-        print(x,y)
-        return x, y
+        print(val)
+        return val
     else:
         center_point = val[1:3]
 
     # Interpolate the query points
         interpolated_values = interpolator(center_point)
 
+        print("inter----------------")
+
+        z=1
+
         print(interpolated_values)
         x, y = interpolated_values[0]
-        return x, y
+        return z, x, y

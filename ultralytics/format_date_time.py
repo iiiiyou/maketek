@@ -8,7 +8,7 @@ def get_date_in_yyyymmdd():
 def format_date():
   """Returns the current date in YYYYMMDD format."""
   now = datetime.datetime.now()
-  return now.strftime("%Y%m%d")
+  return now.strftime("%Y%m%d%H")
 
 def get_time_in_mmddss():
   """Returns the current time in mmddss format."""
