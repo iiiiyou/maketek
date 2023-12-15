@@ -162,7 +162,7 @@ cython_debug/
 datasets
 runs
 detect_images
-roboflow
+
 
 *.pt
 *.mp4
