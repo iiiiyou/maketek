@@ -2,12 +2,10 @@ import cv2
 from ultralytics import YOLO
 
 # Load the YOLOv8 model
-# model = YOLO('C:\\workspace\\maketek\\runs\\detect\\train3\\weights\\best.pt')  # pretrained YOLOv8n model
-model = YOLO('yolov8m-seg.pt')  # pretrained YOLOv8n model
+model = YOLO('yolov8n.pt')
 
 # Open the video file
-# video_path = "C:\\workspace\\maketek\\deform_spot__output_02.mp4"
-# video_path = "C:\\workspace\\maketek\\raw_output_03.mp4"
+# video_path = "path/to/your/video/file.mp4"
 cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)
 
 # Loop through the video frames
@@ -17,9 +15,7 @@ while cap.isOpened():
 
     if success:
         # Run YOLOv8 inference on the frame
-        # results = model(frame)
-        # Run inference on 'bus.jpg' with arguments
-        results = model.predict(frame, save=False, imgsz=1080, conf=0.5)
+        results = model(frame)
 
         # Visualize the results on the frame
         annotated_frame = results[0].plot()
