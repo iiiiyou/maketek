@@ -2,7 +2,7 @@ import cv2
 from ultralytics import YOLO
 
 # Load the YOLOv8 model
-model = YOLO('yolov8n.pt')
+model = YOLO('yolov8m-pose.pt')
 
 # Open the video file
 # video_path = "path/to/your/video/file.mp4"
@@ -21,7 +21,8 @@ while cap.isOpened():
         annotated_frame = results[0].plot()
 
         # Display the annotated frame
-        cv2.imshow("YOLOv8 Inference", annotated_frame)
+        imS = cv2.resize(annotated_frame, (1024, 1024)) 
+        cv2.imshow("YOLOv8 Inference", imS)
 
         # Break the loop if 'q' is pressed
         if cv2.waitKey(1) & 0xFF == ord("q"):
