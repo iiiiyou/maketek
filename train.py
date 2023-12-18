@@ -12,7 +12,7 @@ if not os.path.exists("datasets\\640_two_class_full_annotation-3"):
 
     shutil.move("640_two_class_full_annotation-3", "datasets/")
 
-# 모델을 로드하세요.
+# 모델을 로드하세요..
 model = YOLO('yolov8m.yaml')  # YAML에서 새 모델 구축
 model = YOLO('yolov8m.pt')  # 사전 훈련된 모델 로드 (훈련을 위해 권장됨)
 # model = YOLO('yolov8m.yaml').load('yolov8n.pt')  # YAML에서 구축 및 가중치 전달
