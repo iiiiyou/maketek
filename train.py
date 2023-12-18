@@ -10,7 +10,7 @@ if not os.path.exists("datasets\\640_two_class_full_annotation-3"):
     project = rf.workspace("i4umaket").project("640_two_class_full_annotation")
     dataset = project.version(3).download("yolov8")
 
-    shutil.move("640_two_class_full_annotation-3", "datasets/")
+    shutil.move("640_two_class_full_annotation-3", "datasets\\640_two_class_full_annotation-3\\")
 
 # 모델을 로드하세요..
 model = YOLO('yolov8m.yaml')  # YAML에서 새 모델 구축
