@@ -1,5 +1,5 @@
 ''' 
-streamlit run webcam_streamlit.py --server.headless true --server.port 8888
+streamlit run webcam_streamlit_sandbox3.py --server.headless true --server.port 8888
 '''
 
 import av
@@ -10,7 +10,7 @@ from streamlit_webrtc import webrtc_streamer, VideoHTMLAttributes, WebRtcMode, V
 from ultralytics import YOLO
 import time
 import threading
-import LS_Modbus_copy as modbus
+import LS_Modbus as modbus
 import format_date_time as date
 import os
 import datetime
@@ -51,11 +51,11 @@ def process(result, frame):
 
         print(start)
 
-        path='C:/Users/admin/Downloads/yolov81/yolov8/'+date.format_date()+'/'
+        # path='C:/Users/admin/Downloads/yolov81/yolov8/'+date.format_date()+'/'
 
-        makedirs(path)
+        # makedirs(path)
         
-        cv2.imwrite('C:/Users/admin/Downloads/yolov81/yolov8/'+date.format_date()+'/'+date.get_time_in_mmddss()+'.jpg', frame)
+        # cv2.imwrite('C:/Users/admin/Downloads/yolov81/yolov8/'+date.format_date()+'/'+date.get_time_in_mmddss()+'.jpg', frame)
 
         modbus.write_detected(start)
     else:
