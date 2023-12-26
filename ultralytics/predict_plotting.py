@@ -3,7 +3,7 @@ from ultralytics import YOLO
 
 # Load a pretrained YOLOv8n model
 # model = YOLO('C:\\workspace\\maketek\\runs\\detect\\train3\\weights\\best.pt')  # pretrained YOLOv8n model
-model = YOLO('model\\two_class_full_best_seg.pt')  # pretrained YOLOv8n model
+model = YOLO('model\\two_class_full_best_seg-4.pt')  # pretrained YOLOv8n model
 
 # Run inference on 'bus.jpg'
 image = 'C:\\workspace\\maketek\\raw_151651.jpg'

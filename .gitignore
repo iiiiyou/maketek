@@ -168,3 +168,9 @@ detect_images
 *.mp4
 !deform_spot__output_02.mp4
 !best.pt
+
+
+PyQt/
+YOLOv8-DeepSort-PyQt-GUI/
+YOLOv8-streamlit-app/
+test/
