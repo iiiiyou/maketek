@@ -172,5 +172,5 @@ detect_images
 
 PyQt/
 YOLOv8-DeepSort-PyQt-GUI/
-YOLOv8-streamlit-app/
+#YOLOv8-streamlit-app/
 test/

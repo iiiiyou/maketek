@@ -16,7 +16,7 @@ while cap.isOpened():
 
     if success:
         # Run YOLOv8 inference on the frame
-        results = model(frame, save=False, imgsz=1080, conf=0.80)
+        results = model(frame, save=False, imgsz=1080, conf=0.99)
 
         # Visualize the results on the frame
         annotated_frame = results[0].plot()
