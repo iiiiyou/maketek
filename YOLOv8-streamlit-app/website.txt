@@ -1,0 +1,5 @@
+https://github.com/JackDance/YOLOv8-streamlit-app
+
+https://github.com/monemati/YOLOv8-DeepSORT-Streamlit
+
+streamlit run YOLOv8-streamlit-app\app.py
