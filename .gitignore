@@ -159,7 +159,8 @@ cython_debug/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
 
-
+two_class_full_best_detect-4.pt
+two_class_full_best_seg-4.pt
 yolov8m.pt
 yolov8m-seg.pt
 raw_output_03.mp4
