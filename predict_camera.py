@@ -15,7 +15,7 @@ def makedirs(path):
 
 
 # Load the YOLOv8 model
-model = YOLO('C:/Workplace/i4u/maketek/yolov8n.pt')  # pretrained YOLOv8n model
+model = YOLO('model\\two_class_full_best_seg_4.pt')  # pretrained YOLOv8n model
         
 
 # Open the video file
@@ -44,7 +44,7 @@ while cap.isOpened():
         # cv2.imshow("YOLOv8 Inference", annotated_frame)
 
         # Make folders if not exsist
-        path='C:/Workplace/i4u/maketek/detect_image/'+date.format_date()+'/'
+        path='detect_image\\'+date.format_date()+'\\'
         makedirs(path)
 
         # Saving images
@@ -62,7 +62,7 @@ while cap.isOpened():
             print(start)
             
             # Saving images
-            cv2.imwrite('C:/Workplace/i4u/maketek/detect_image/'+date.format_date()+'/'+date.get_time_in_mmddss()+'.jpg', imS)
+            cv2.imwrite('detect_image\\'+date.format_date()+'\\'+date.get_time_in_mmddss()+'.jpg', imS)
 
             modbus.write_detected(start)
         else:
