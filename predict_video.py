@@ -2,7 +2,7 @@ import cv2
 from ultralytics import YOLO
 
 # Load the YOLOv8 model
-model = YOLO('model\\two_class_full_best_seg-4.pt')
+model = YOLO('model\\two_class_full_best_seg_4.pt')
 
 # Open the video file
 # video_path = "mp4\\deform_spot__output_02.mp4"
@@ -16,7 +16,7 @@ while cap.isOpened():
 
     if success:
         # Run YOLOv8 inference on the frame
-        results = model(frame, save=False, imgsz=1080, conf=0.99)
+        results = model(frame, save=False, imgsz=1080, conf=0.80)
 
         # Visualize the results on the frame
         annotated_frame = results[0].plot()
