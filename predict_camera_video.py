@@ -15,42 +15,44 @@ def makedirs(path):
 
 
 #count
-def count_fire(detected_list):
+def count_fire(detected_list,result):
 
     if len(detected_list) > 10:
         detected_list.pop(0)  # Remove the first element
         
 
         if detected_list.count(1) > 3:
-            
-            cords = result.boxes.xyxy[0].tolist()
-            cords = [round(x) for x in cords]
-            start = cords[0:2]  # x1,y1
 
-            start.insert(0,1)
+            if(len(result.boxes)!=0):
+                cords = result.boxes.xyxy[0].tolist()
+                cords = [round(x) for x in cords]
+                start = cords[0:2]  # x1,y1
 
-            print("-----------------------")
-            print(start)
-            
-            # Saving images
-            # cv2.imwrite('C:/Workplace/i4u/maketek/detect_image/'+date.format_date()+'/'+date.get_time_in_mmddss()+'.jpg', imS)
+                start.insert(0,1)
 
-            modbus.write_detected(start)
+                print("-----------------------")
+                print(start)
+                
+                # Saving images
+                # cv2.imwrite('C:/Workplace/i4u/maketek/detect_image/'+date.format_date()+'/'+date.get_time_in_mmddss()+'.jpg', imS)
+
+                modbus.write_detected(start)
+            else:
+                # Break the loop if the end of the video is reached
+                return 0
+
 
 
 
 # Load the YOLOv8 model
-model = YOLO('model\\two_class_full_best_seg_4.pt')  # pretrained YOLOv8n model
-        
-
-# Open the video file
-video_path = "mp4\\test.mp4"
-cap = cv2.VideoCapture(video_path)
-# cap = cv2.VideoCapture(1)
+# model = YOLO('model\\two_class_full_best_seg_4.pt')  # pretrained YOLOv8n model
+model = YOLO('C:/Workplace/i4u/maketek/yolov8n.pt')  # pretrained YOLOv8n model   
+cap = cv2.VideoCapture(1)
 
 
 # Create a list to count fire occurances
 detected_list = []
+
 # Loop through the video frames
 while cap.isOpened():
     # Read a frame from the video
@@ -63,7 +65,7 @@ while cap.isOpened():
         results = model.predict(frame, save=False, imgsz=1080, conf=0.75)
         result = results[0]
 
-        print(result)
+        # print(result)
 
         # Visualize the results on the frame
         annotated_frame = results[0].plot()
@@ -94,7 +96,7 @@ while cap.isOpened():
 
 
         print("detect_list: ", detected_list)
-        count_fire(detected_list)
+        count_fire(detected_list,result)
 
         # Break the loop if 'q' is pressed
         if cv2.waitKey(1) & 0xFF == ord("q"):
