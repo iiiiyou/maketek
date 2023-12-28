@@ -23,7 +23,7 @@ def write_detected(values):
     print('----------------')
     print(val)
     client = ModbusTcpClient("192.168.1.2", port=502)
-    return1 = client.write_registers(0x0900,val,1)
+    return1 = client.write_registers(0x0009,val,1)
     client.close()
     print("modbus--------------sss")
     print(return1)
@@ -35,10 +35,8 @@ def write_detected(values):
   
 
 
-# x=100
-# y=100
+# x=500
+# y=1000
 
 # # Write 1 to register 0
-# write_detected('',[x,y])
-
-# client.close()
+# write_detected([1,x,y])
