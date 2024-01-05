@@ -1,11 +1,14 @@
 import cv2
+import format_date_time as date
 
 # Create a VideoCapture object to capture the video from your camera
 cap = cv2.VideoCapture(0)
 
 # Create a VideoWriter object to write the recorded video to a file
 fourcc = cv2.VideoWriter_fourcc(*'mp4v')
-out = cv2.VideoWriter('output_02.mp4', fourcc, 80.0, (1080, 1080))
+# fps=cap.get(cv2.CAP_PROP_FPS)
+fps=26.249145
+out = cv2.VideoWriter(date.get_time_in_mmddss()+'.mp4', fourcc, fps, (2048, 2048))
 
 # Start a loop to capture and record the video frames
 while True:

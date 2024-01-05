@@ -30,7 +30,7 @@ while cap.isOpened():
         # Run YOLOv8 inference on the frame
         # results = model(frame)
         # Run inference on 'bus.jpg' with arguments
-        results = model.predict(frame, save=False, imgsz=1080, conf=0.75)
+        results = model.predict(frame, save=False, imgsz=1080, conf=0.65)
         result = results[0]
 
         # print(result)
