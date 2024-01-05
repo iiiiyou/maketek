@@ -33,7 +33,7 @@ while cap.isOpened():
         results = model.predict(frame, save=False, imgsz=1080, conf=0.75)
         result = results[0]
 
-        print(result)
+        # print(result)
 
         # Visualize the results on the frame
         annotated_frame = results[0].plot()
@@ -44,8 +44,8 @@ while cap.isOpened():
         # cv2.imshow("YOLOv8 Inference", annotated_frame)
 
         # Make folders if not exsist
-        path='detect_image\\'+date.format_date()+'\\'
-        makedirs(path)
+        # path='detect_image\\'+date.format_date()+'\\'
+        # makedirs(path)
 
         # Saving images
         # cv2.imwrite('detect_images\\'+date.format_date()+'\\'+date.get_time_in_mmddss()+'.jpg', annotated_frame)
@@ -58,22 +58,22 @@ while cap.isOpened():
 
             start.insert(0,1)
 
-            print("-----------------------")
-            print(start)
+            # print("-----------------------")
+            # print(start)
             
             # Saving images
-            cv2.imwrite('detect_image\\'+date.format_date()+'\\'+date.get_time_in_mmddss()+'.jpg', imS)
+            # cv2.imwrite('detect_image\\'+date.format_date()+'\\'+date.get_time_in_mmddss()+'.jpg', imS)
 
-            modbus.write_detected(start)
+            # modbus.write_detected(start)
         else:
             # Break the loop if the end of the video is reached
             print('no detacted')
-            modbus.write_detected([0,0,0])
+            # modbus.write_detected([0,0,0])
 
         # Break the loop if 'q' is pressed
         if cv2.waitKey(1) & 0xFF == ord("q"):            
             print("inputted Q!!!!!")
-            modbus.write_detected([0,0,0])
+            # modbus.write_detected([0,0,0])
             print("endded Q!!!!!")
             break
     else:
