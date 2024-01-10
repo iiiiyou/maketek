@@ -17,7 +17,9 @@ h.device_info_list
 print(h.device_info_list)
 
 # ia = h.create(0)
-ia = h.create({'serial_number': '23G7076'})
+# ia = h.create({'serial_number': '23G7076'}) # - 1080 camera left
+# ia = h.create({'serial_number': '23G7069'}) # - 1080 camera right
+ia = h.create({'serial_number': '22FK019'}) # - 2048 camera left
 
 # Make folders if not exsist
 def makedirs(path):
@@ -46,7 +48,7 @@ try:
             img_copy = img.copy()
             img_copy = cv2.cvtColor(img, cv2.COLOR_BayerRG2RGB)
 
-            results = model.predict(img_copy, save=False, imgsz=1024, conf=0.65)
+            results = model.predict(img_copy, save=False, imgsz=2048, conf=0.65)
             result = results[0]
 
             # Visualize the results on the frame
@@ -66,7 +68,7 @@ try:
             # makedirs(path)
 
             # Saving images
-            # cv2.imwrite('detect_images\\'+date.format_date()+'\\'+date.get_time_in_mmddss()+'.jpg', annotated_frame)
+            # cv2.imwrite('detect_image\\'+date.format_date()+'\\'+date.get_time_in_mmddss()+'.jpg', annotated_frame)
 
             # Modbus write
             if(len(result.boxes)!=0):
