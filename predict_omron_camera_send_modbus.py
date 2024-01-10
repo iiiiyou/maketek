@@ -18,8 +18,8 @@ print(h.device_info_list)
 
 # ia = h.create(0)
 # ia = h.create({'serial_number': '23G7076'}) # - 1080 camera left
-# ia = h.create({'serial_number': '23G7069'}) # - 1080 camera right
-ia = h.create({'serial_number': '22FK019'}) # - 2048 camera left
+ia = h.create({'serial_number': '23G7069'}) # - 1080 camera right
+# ia = h.create({'serial_number': '22FK019'}) # - 2048 camera left
 
 # Make folders if not exsist
 def makedirs(path):
@@ -31,8 +31,7 @@ def makedirs(path):
 
 
 # Load the YOLOv8 model
-model = YOLO('model\\2048_two_class_full_annotation-2_seg.pt')  # pretrained YOLOv8n model
-# model = YOLO('model\\2048_two_class_full_annotation-2_detect.pt')  # pretrained YOLOv8n model
+model = YOLO('model\\1088_two_class_full_annotation-1_seg.pt')  # pretrained YOLOv8n model
         
 
 try:
@@ -49,12 +48,12 @@ try:
             img_copy = img.copy()
             img_copy = cv2.cvtColor(img, cv2.COLOR_BayerRG2RGB)
 
-            results = model.predict(img_copy, save=False, imgsz=2048, conf=0.65)
+            results = model.predict(img_copy, save=False, imgsz=1024, conf=0.5)
             result = results[0]
 
             # Visualize the results on the frame
             annotated_frame = results[0].plot()
-                            
+            
             # img_copy = img.copy()
             # img_copy = cv2.cvtColor(img, cv2.COLOR_BayerRG2RGB)
             # cv2.namedWindow("window", cv2.WINDOW_KEEPRATIO | cv2.WINDOW_NORMAL)
@@ -85,11 +84,11 @@ try:
                 # Saving images
                 # cv2.imwrite('detect_image\\'+date.format_date()+'\\'+date.get_time_in_mmddss()+'.jpg', imS)
 
-                # modbus.write_detected(start)
+                modbus.write_detected(start)
             else:
                 # Break the loop if the end of the video is reached
                 print('no detacted')
-                # modbus.write_detected([0,0,0])
+                modbus.write_detected([0,0,0])
 
             # Break the loop if 'q' is pressed
             #########################  
@@ -97,6 +96,7 @@ try:
             if cv2.waitKey(10) == ord('q'):
                 done = True
                 print('break')
+                modbus.write_detected([0,0,0])
             i = i + 1
 except Exception as e:
     traceback.print_exc(file=sys.stdout)
