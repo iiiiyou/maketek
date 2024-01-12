@@ -101,18 +101,17 @@ try:
             # results = model.predict(img_copy, save=False, imgsz=2048, conf=0.65)
             # result = results[0]
 
-            results = get_sliced_prediction(
+            result = get_sliced_prediction(
                 img_copy,
                 detection_model,
                 slice_height=640,
                 slice_width=640,
                 overlap_height_ratio=0.2,
                 overlap_width_ratio=0.2
-            )
-            result = results[0]      
+            )     
 
             # Visualize the results on the frame
-            annotated_frame = results[0].plot()
+            annotated_frame = result.plot()
                             
             # img_copy = img.copy()
             # img_copy = cv2.cvtColor(img, cv2.COLOR_BayerRG2RGB)
