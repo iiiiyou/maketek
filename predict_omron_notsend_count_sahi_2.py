@@ -72,7 +72,7 @@ detected_list = []
 
 
 # Load the YOLOv8 model
-model = YOLO('models\2048_two_class_full_annotation-5_seg_9.pt')  # pretrained YOLOv8n model
+model = YOLO('models\\2048_two_class_full_annotation-5_seg_9.pt')  # pretrained YOLOv8n model
 # model = YOLO('model\\2048_two_class_full_annotation-2_detect.pt')  # pretrained YOLOv8n model
 
 yolov8_model_path = "models\2048_two_class_full_annotation-5_seg_9.pt"
