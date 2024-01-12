@@ -99,12 +99,12 @@ try:
             result = sliced_image[0]
 
             # Visualize the results on the frame
-            annotated_frame = sliced_image[0].plot()
+            # annotated_frame = sliced_image[0].plot()
                             
             # img_copy = img.copy()
             # img_copy = cv2.cvtColor(img, cv2.COLOR_BayerRG2RGB)
             # cv2.namedWindow("window", cv2.WINDOW_KEEPRATIO | cv2.WINDOW_NORMAL)
-            imS = cv2.resize(annotated_frame, (960, 960)) 
+            imS = cv2.resize(result, (960, 960)) 
             cv2.imshow("YOLOv8 Inference", imS)
             fps = ia.statistics.fps
             print("FPS: ", fps)
