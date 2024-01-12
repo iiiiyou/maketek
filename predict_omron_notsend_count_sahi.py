@@ -67,7 +67,7 @@ detected_list = []
 
 
 # Load the YOLOv8 model
-model = YOLO('models\\2048_two_class_full_annotation-5_seg_9.pt')  # pretrained YOLOv8n model
+model = YOLO('model\\2048_two_class_full_annotation-2_seg.pt')  # pretrained YOLOv8n model
 # model = YOLO('model\\2048_two_class_full_annotation-2_detect.pt')  # pretrained YOLOv8n model
         
 # SAHI - Set Up a Model
@@ -91,20 +91,20 @@ try:
 
             slicer = sv.InferenceSlicer(callback=callback)
             sliced_detections = slicer(image=img_copy)
-
-            box_annotator = sv.BoxAnnotator()
-            result = box_annotator.annotate(img_copy.copy(), detections=sliced_detections)
+            
+            # box_annotator = sv.BoxAnnotator()
+            # sliced_image = box_annotator.annotate(image.copy(), detections=sliced_detections)
 
             # results = model.predict(img_copy, save=False, imgsz=2048, conf=0.65)
-            # result = sliced_image[0]
+            result = sliced_detections[0]
 
             # Visualize the results on the frame
-            # annotated_frame = sliced_image[0].plot()
+            annotated_frame = sliced_detections[0].plot()
                             
             # img_copy = img.copy()
             # img_copy = cv2.cvtColor(img, cv2.COLOR_BayerRG2RGB)
             # cv2.namedWindow("window", cv2.WINDOW_KEEPRATIO | cv2.WINDOW_NORMAL)
-            imS = cv2.resize(result, (960, 960)) 
+            imS = cv2.resize(annotated_frame, (960, 960)) 
             cv2.imshow("YOLOv8 Inference", imS)
             fps = ia.statistics.fps
             print("FPS: ", fps)
