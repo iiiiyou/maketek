@@ -9,6 +9,7 @@ import sys
 import traceback
 
 import supervision as sv
+import numpy as np
 
 h = Harvester()
 h.add_file('C:\\Program Files\\Common Files\\OMRON_SENTECH\\GenTL\\v1_5\\StGenTL_MD_VC141_v1_5_x64.cti')
@@ -69,6 +70,10 @@ detected_list = []
 model = YOLO('model\\2048_two_class_full_annotation-2_seg.pt')  # pretrained YOLOv8n model
 # model = YOLO('model\\2048_two_class_full_annotation-2_detect.pt')  # pretrained YOLOv8n model
         
+# SAHI - Set Up a Model
+def callback(x: np.ndarray) -> sv.Detections:
+    result = model(x, verbose=False, conf=0.25)[0]
+    return sv.Detections.from_ultralytics(result)
 
 try:
     ia.start()
@@ -84,11 +89,17 @@ try:
             img_copy = img.copy()
             img_copy = cv2.cvtColor(img, cv2.COLOR_BayerRG2RGB)
 
-            results = model.predict(img_copy, save=False, imgsz=2048, conf=0.65)
-            result = results[0]
+            slicer = sv.InferenceSlicer(callback=callback)
+            sliced_detections = slicer(image=img_copy)
+
+            box_annotator = sv.BoxAnnotator()
+            sliced_image = box_annotator.annotate(img_copy.copy(), detections=sliced_detections)
+
+            # results = model.predict(img_copy, save=False, imgsz=2048, conf=0.65)
+            result = sliced_image[0]
 
             # Visualize the results on the frame
-            annotated_frame = results[0].plot()
+            annotated_frame = sliced_image[0].plot()
                             
             # img_copy = img.copy()
             # img_copy = cv2.cvtColor(img, cv2.COLOR_BayerRG2RGB)
