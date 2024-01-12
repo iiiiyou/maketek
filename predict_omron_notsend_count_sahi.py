@@ -93,7 +93,7 @@ try:
             sliced_detections = slicer(image=img_copy)
 
             box_annotator = sv.BoxAnnotator()
-            sliced_image = box_annotator.annotate(img_copy.copy(), detections=sliced_detections)
+            result = box_annotator.annotate(img_copy.copy(), detections=sliced_detections)
 
             # results = model.predict(img_copy, save=False, imgsz=2048, conf=0.65)
             # result = sliced_image[0]
@@ -104,7 +104,7 @@ try:
             # img_copy = img.copy()
             # img_copy = cv2.cvtColor(img, cv2.COLOR_BayerRG2RGB)
             # cv2.namedWindow("window", cv2.WINDOW_KEEPRATIO | cv2.WINDOW_NORMAL)
-            imS = cv2.resize(sliced_image, (960, 960)) 
+            imS = cv2.resize(result, (960, 960)) 
             cv2.imshow("YOLOv8 Inference", imS)
             fps = ia.statistics.fps
             print("FPS: ", fps)
