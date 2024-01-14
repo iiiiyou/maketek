@@ -15,7 +15,7 @@ print(h.device_info_list)
 # ia = h.create(0)
 # ia = h.create({'serial_number': '23G7076'}) # - 1080 camera left
 ia = h.create({'serial_number': '23G7069'}) # - 1080 camera right
-# ia = h.create({'serial_number': '22FK019'}) # - 2048 camera left
+# ia = h.create({'serial_number': '22FK019'}) # - 1664 camera left
 
 try:
     ia.start()
@@ -35,7 +35,7 @@ try:
         print("FPS: ", fps)
 
         
-        cv2.imwrite(date.get_time_in_mmddss()+'_1080.jpg', img_copy)
+        cv2.imwrite('images\\training\\1024(640)_'+date.get_time_in_mmddss()+'.jpg', img_copy)
 
         #########################  
         # Make folders if not exsist
@@ -58,4 +58,3 @@ finally:
     print('fin')
     h.reset()
 
-    

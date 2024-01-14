@@ -160,7 +160,7 @@ cython_debug/
 #.idea/
 
 detect_image/
-
+images/
 two_class_full_best_detect-4.pt
 two_class_full_best_seg-4.pt
 yolov8m.pt
