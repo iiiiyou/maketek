@@ -31,8 +31,8 @@ def makedirs(path):
 
 
 # Load the YOLOv8 model
-model = YOLO('models\\1664_two_class_annotation-1_seg-1.pt')  # pretrained YOLOv8n model
-# model = YOLO('model\\2048_two_class_full_annotation-2_detect.pt')  # pretrained YOLOv8n model
+# model = YOLO('models\\1664_two_class_annotation-1_seg-1.pt')  # pretrained YOLOv8n model
+model = YOLO('models\\1664_four_class_annotation-2-1_19-seg.pt')  # pretrained YOLOv8n model
         
 
 try:

@@ -3,12 +3,14 @@ from ultralytics import YOLO
 import format_date_time as date
 import LS_Modbus as modbus
 import os
-import time
 
 from harvesters.core import Harvester
 import sys
 import traceback
-
+import time
+import sys
+import numpy
+# numpy.set_printoptions(threshold=sys.maxsize)
 
 h = Harvester()
 h.add_file('C:\\Program Files\\Common Files\\OMRON_SENTECH\\GenTL\\v1_5\\StGenTL_MD_VC141_v1_5_x64.cti')
@@ -22,6 +24,11 @@ print(h.device_info_list)
 # ia = h.create({'serial_number': '23G7069'}) # - 1080 camera right
 ia = h.create({'serial_number': '22FK019'}) # - 2048 camera left
 
+# Create a list to count fire occurances
+
+global detected_list
+detected_list=[]
+
 # Make folders if not exsist
 def makedirs(path):
     try:
@@ -32,44 +39,64 @@ def makedirs(path):
 
 
 #count
-def count_fire(detected_list):
+def count_fire(detected_a):
 
-    if len(detected_list) > 10:
-        detected_list.pop(0)  # Remove the first element
-        
+    if len(detected_a) > 10:
+        detected_a.pop(0)  # Remove the first element
+    
+        if detected_a.count(1) > 3:
 
-        if detected_list.count(1) > 3:
+            modbus.write_detected([1,0,0]) #send modbus [1,0,0] mean is stop vibration
+            # time.sleep(10)\q
+            for i in range(5):
+                with ia.fetch() as buffer2:
+                    # Work with the Buffer object. It consists of everything you need.
+                    print(buffer2)
+                    # The buffer will automatically be queued.
+                    img2 = buffer2.payload.components[0].data
+                    img2 = img2.reshape(buffer2.payload.components[0].height, buffer2.payload.components[0].width)
+                    img_copy2 = img2.copy()
+                    img_copy2 = cv2.cvtColor(img2, cv2.COLOR_BayerRG2RGB)
 
-            modbus.write_detected([1,0,0])
-            time.sleep(0.5)
-            
-            results = model.predict(img_copy, save=False, imgsz=1664, conf=0.70)
-            result = results[0]
 
+                    results2 = model.predict(img_copy2, save=False, imgsz=1664, conf=0.85)
+                    result2 = results2[0]
+
+                    # Visualize the results on the frame
+                    annotated_frame2 = results2[0].plot()
+                                    
+                    # img_copy = img.copy()
+                    # img_copy = cv2.cvtColor(img, cv2.COLOR_BayerRG2RGB)
+                    # cv2.namedWindow("window", cv2.WINDOW_KEEPRATIO | cv2.WINDOW_NORMAL)
+                    imS2 = cv2.resize(annotated_frame2, (640, 640)) 
+                    cv2.imshow("YOLOv8 Inference2", imS2)
+                
             # Modbus write
-            if(len(result.boxes)!=0):
-                cords = result.boxes.xyxy[0].tolist()
-                cords = [round(x) for x in cords]
-                start = cords[0:2]  # x1,y1
+            if(len(result2.boxes)!=0):
+                cords2 = result2.boxes.xyxy[0].tolist()
+                cords2 = [round(x) for x in cords2]
+                start2 = cords2[0:2]  # x1,y1
 
-                start.insert(0,1)
-
-                # print("-----------------------")
-                # print(start)
+                start2.insert(0,1)
                 
                 # Saving images
                 # cv2.imwrite('detect_image\\'+date.format_date()+'\\'+date.get_time_in_mmddss()+'.jpg', imS)
 
-                # modbus.write_detected(start)
+                modbus.write_detected(start2)
+
+                global detected_list
+
+                detected_list=[0,0,0,0,0,0,0,0,0,0]
+                print(detected_list)
+                print("--")
+
             else:
                 # Break the loop if the end of the video is reached
                 print('no detacted')
-                # modbus.write_detected([0,0,0])
+                modbus.write_detected([0,0,0])
                 return 0
 
 
-# Create a list to count fire occurances
-detected_list = []
 
 
 # Load the YOLOv8 model
@@ -100,7 +127,7 @@ try:
             # img_copy = img.copy()
             # img_copy = cv2.cvtColor(img, cv2.COLOR_BayerRG2RGB)
             # cv2.namedWindow("window", cv2.WINDOW_KEEPRATIO | cv2.WINDOW_NORMAL)
-            imS = cv2.resize(annotated_frame, (960, 960)) 
+            imS = cv2.resize(annotated_frame, (640, 640)) 
             cv2.imshow("YOLOv8 Inference", imS)
             fps = ia.statistics.fps
             print("FPS: ", fps)
@@ -124,9 +151,8 @@ try:
             else:
                 # Break the loop if the end of the video is reached
                 detected_list.append(0)
-                print('no detacted')
                 modbus.write_detected([0,0,0])
-
+                print('no detacted')
 
             print("detect_list: ", detected_list)
             count_fire(detected_list)

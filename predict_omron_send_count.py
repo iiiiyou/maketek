@@ -30,45 +30,16 @@ def makedirs(path):
         print("Error: Failed to create the directory.")
 
 
-# Load the YOLOv8 model
-model = YOLO('models\\1664_four_class_annotation-2-1_19-seg.pt')  # pretrained YOLOv8n model
+#count
+def count_fire(detected_list):
+
+    if len(detected_list) > 10:
+        detected_list.pop(0)  # Remove the first element
         
 
-try:
-    ia.start()
-    i = 0
-    done = False
-    while not done:
-        with ia.fetch() as buffer:
-            # Work with the Buffer object. It consists of everything you need.
-            print(buffer)
-            # The buffer will automatically be queued.
-            img = buffer.payload.components[0].data
-            img = img.reshape(buffer.payload.components[0].height, buffer.payload.components[0].width)
-            img_copy = img.copy()
-            img_copy = cv2.cvtColor(img, cv2.COLOR_BayerRG2RGB)
+        if detected_list.count(1) > 3:
 
-            results = model.predict(img_copy, save=False, imgsz=1664, conf=0.9)
-            result = results[0]
-
-            # Visualize the results on the frame
-            annotated_frame = results[0].plot()
-            
-            # img_copy = img.copy()
-            # img_copy = cv2.cvtColor(img, cv2.COLOR_BayerRG2RGB)
-            # cv2.namedWindow("window", cv2.WINDOW_KEEPRATIO | cv2.WINDOW_NORMAL)
-            imS = cv2.resize(annotated_frame, (960, 960)) 
-            cv2.imshow("YOLOv8 Inference", imS)
-            fps = ia.statistics.fps
-            print("FPS: ", fps)
-
-            #########################  
-            # Make folders if not exsist
-            # path='detect_image\\'+date.format_date()+'\\'
-            # makedirs(path)
-
-            # Saving images
-            # cv2.imwrite('detect_image\\'+date.format_date()+'\\'+date.get_time_in_mmddss()+'.jpg', annotated_frame)
+            modbus.write_detected([1,0,0])
 
             # Modbus write
             if(len(result.boxes)!=0):
@@ -89,15 +60,77 @@ try:
                 # Break the loop if the end of the video is reached
                 print('no detacted')
                 modbus.write_detected([0,0,0])
+                return 0
+
+
+# Create a list to count fire occurances
+detected_list = []
+
+
+# Load the YOLOv8 model
+model = YOLO('models\\1664_four_class_annotation-2-1_19-seg.pt')  # pretrained YOLOv8n model
+# model = YOLO('models\\1664_two_class_annotation-1_seg-1.pt')  # pretrained YOLOv8n model
+        
+
+try:
+    ia.start()
+    # i = 0
+    done = False
+    while not done:
+        with ia.fetch() as buffer:
+            # Work with the Buffer object. It consists of everything you need.
+            print(buffer)
+            # The buffer will automatically be queued.
+            img = buffer.payload.components[0].data
+            img = img.reshape(buffer.payload.components[0].height, buffer.payload.components[0].width)
+            img_copy = img.copy()
+            img_copy = cv2.cvtColor(img, cv2.COLOR_BayerRG2RGB)
+
+            results = model.predict(img_copy, save=False, imgsz=1664, conf=0.70)
+            result = results[0]
+
+            # Visualize the results on the frame
+            annotated_frame = results[0].plot()
+                            
+            # img_copy = img.copy()
+            # img_copy = cv2.cvtColor(img, cv2.COLOR_BayerRG2RGB)
+            # cv2.namedWindow("window", cv2.WINDOW_KEEPRATIO | cv2.WINDOW_NORMAL)
+            imS = cv2.resize(annotated_frame, (960, 960)) 
+            cv2.imshow("YOLOv8 Inference", imS)
+            fps = ia.statistics.fps
+            print("FPS: ", fps)
+
+            #########################  
+            # Make folders if not exsist
+            # path='detect_image\\'+date.format_date()+'\\'
+            # makedirs(path)
+
+            # Saving images
+            # cv2.imwrite('detect_image\\'+date.format_date()+'\\'+date.get_time_in_mmddss()+'.jpg', annotated_frame)
+
+            
 
             # Break the loop if 'q' is pressed
             #########################  
+
+            # Modbus write
+            if(len(result.boxes)!=0):
+                detected_list.append(1)  # Add the last element
+            else:
+                # Break the loop if the end of the video is reached
+                detected_list.append(0)
+                print('no detacted')
+                modbus.write_detected([0,0,0])
+
+
+            print("detect_list: ", detected_list)
+            count_fire(detected_list)
           
             if cv2.waitKey(10) == ord('q'):
                 done = True
-                print('break')
                 modbus.write_detected([0,0,0])
-            i = i + 1
+                print('break')
+            # i = i + 1
 except Exception as e:
     traceback.print_exc(file=sys.stdout)
 finally:
