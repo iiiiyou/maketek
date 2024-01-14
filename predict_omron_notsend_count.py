@@ -3,6 +3,7 @@ from ultralytics import YOLO
 import format_date_time as date
 import LS_Modbus as modbus
 import os
+import time
 
 from harvesters.core import Harvester
 import sys
@@ -31,13 +32,20 @@ def makedirs(path):
 
 
 #count
-def count_fire(detected_list,result):
+def count_fire(detected_list):
 
     if len(detected_list) > 10:
         detected_list.pop(0)  # Remove the first element
         
 
         if detected_list.count(1) > 3:
+
+            modbus.write_detected([1,0,0])
+            time.sleep(0.5)
+            
+            results = model.predict(img_copy, save=False, imgsz=2048, conf=0.65)
+            result = results[0]
+
             # Modbus write
             if(len(result.boxes)!=0):
                 cords = result.boxes.xyxy[0].tolist()
@@ -121,7 +129,7 @@ try:
 
 
             print("detect_list: ", detected_list)
-            count_fire(detected_list,result)
+            count_fire(detected_list)
           
             if cv2.waitKey(10) == ord('q'):
                 done = True
