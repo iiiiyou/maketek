@@ -15,7 +15,8 @@ def makedirs(path):
 
 
 # Load the YOLOv8 model
-model = YOLO('model\\two_class_full_best_seg_4.pt')  # pretrained YOLOv8n model
+# model = YOLO('model\\two_class_full_best_seg_4.pt')  # pretrained YOLOv8n model
+model = YOLO('models\\1664_four_class_annotation-2-1_19-seg.pt')  # pretrained YOLOv8n model
         
 
 # Open the video file
@@ -30,7 +31,7 @@ while cap.isOpened():
         # Run YOLOv8 inference on the frame
         # results = model(frame)
         # Run inference on 'bus.jpg' with arguments
-        results = model.predict(frame, save=False, imgsz=1080, conf=0.65)
+        results = model.predict(frame, save=False, imgsz=1664, conf=0.5)
         result = results[0]
 
         # print(result)
@@ -73,7 +74,7 @@ while cap.isOpened():
         # Break the loop if 'q' is pressed
         if cv2.waitKey(1) & 0xFF == ord("q"):            
             print("inputted Q!!!!!")
-            # modbus.write_detected([0,0,0])
+            modbus.write_detected([0,0,0])
             print("endded Q!!!!!")
             break
     else:

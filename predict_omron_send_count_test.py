@@ -46,6 +46,12 @@ def count_fire(detected_a):
     
         if detected_a.count(1) > 3:
 
+            
+            #########################  
+            # Make folders if not exsist
+            path='detect_image\\'+date.format_date()+'\\'
+            makedirs(path)
+
             modbus.write_detected([1,0,0]) #send modbus [1,0,0] mean is stop vibration
             # time.sleep(10)\q
             for i in range(5):
@@ -59,7 +65,7 @@ def count_fire(detected_a):
                     img_copy2 = cv2.cvtColor(img2, cv2.COLOR_BayerRG2RGB)
 
 
-                    results2 = model.predict(img_copy2, save=False, imgsz=1664, conf=0.85)
+                    results2 = model.predict(img_copy2, save=False, imgsz=1664, conf=0.7)
                     result2 = results2[0]
 
                     # Visualize the results on the frame
@@ -80,7 +86,7 @@ def count_fire(detected_a):
                 start2.insert(0,1)
                 
                 # Saving images
-                # cv2.imwrite('detect_image\\'+date.format_date()+'\\'+date.get_time_in_mmddss()+'.jpg', imS)
+                cv2.imwrite('detect_image\\'+date.format_date()+'\\'+date.get_time_in_mmddss()+'.jpg', imS)
 
                 modbus.write_detected(start2)
 
@@ -89,6 +95,7 @@ def count_fire(detected_a):
                 detected_list=[0,0,0,0,0,0,0,0,0,0]
                 print(detected_list)
                 print("--")
+                # modbus.write_detected([0,0,0])
 
             else:
                 # Break the loop if the end of the video is reached
