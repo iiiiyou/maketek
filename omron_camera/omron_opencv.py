@@ -28,9 +28,27 @@ if __name__ == "__main__":
 
         # Create a system object for device scan and connection.
         st_system = st.create_system()
+        interfacecount = st_system.interface_count
+        is_find = 0
+        for i in range(0, interfacecount) :
+            if(is_find == 1):
+                break
+            st_interface = st_system.get_interface(i)
+            devicecount = st_interface.device_count
+            print(st_interface)
+            print(devicecount)
+            for j in range(0, devicecount) :
+                device_info = st_interface.get_device_info(j)
+                if(device_info.serial_number == "22FK019") :
+                    str_device_id = device_info.device_id
+                    is_find = 1
+                    break
+                    
 
+        st_device = st_interface.create_device_by_id(str_device_id)
+        
         # Connect to first detected device.
-        st_device = st_system.create_first_device()
+        #st_device = st_system.create_first_device()
 
         # Display DisplayName of the device.
         print('Device=', st_device.info.display_name)

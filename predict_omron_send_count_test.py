@@ -65,7 +65,7 @@ def count_fire(detected_a):
                     img_copy2 = cv2.cvtColor(img2, cv2.COLOR_BayerRG2RGB)
 
 
-                    results2 = model.predict(img_copy2, save=False, imgsz=1664, conf=0.7)
+                    results2 = model.predict(img_copy2, save=False, imgsz=1664, conf=0.01)
                     result2 = results2[0]
 
                     # Visualize the results on the frame
@@ -88,14 +88,13 @@ def count_fire(detected_a):
                 # Saving images
                 cv2.imwrite('detect_image\\'+date.format_date()+'\\'+date.get_time_in_mmddss()+'.jpg', imS)
 
-                modbus.write_detected(start2)
+                # modbus.write_detected(start2)
 
                 global detected_list
 
                 detected_list=[0,0,0,0,0,0,0,0,0,0]
                 print(detected_list)
                 print("--")
-                # modbus.write_detected([0,0,0])
 
             else:
                 # Break the loop if the end of the video is reached
@@ -125,7 +124,7 @@ try:
             img_copy = img.copy()
             img_copy = cv2.cvtColor(img, cv2.COLOR_BayerRG2RGB)
 
-            results = model.predict(img_copy, save=False, imgsz=1664, conf=0.70)
+            results = model.predict(img_copy, save=False, imgsz=1664, conf=0.01)
             result = results[0]
 
             # Visualize the results on the frame

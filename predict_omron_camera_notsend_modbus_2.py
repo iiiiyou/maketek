@@ -31,7 +31,7 @@ def makedirs(path):
 
 
 # Load the YOLOv8 model
-model = YOLO('models\\1664_two_class_annotation-1_seg-1.pt')  # pretrained YOLOv8n model
+model = YOLO('models\\1664_four_class_annotation-2-1_19-seg.pt')  # pretrained YOLOv8n model
 # model = YOLO('model\\2048_two_class_full_annotation-2_detect.pt')  # pretrained YOLOv8n model
         
 
@@ -49,7 +49,7 @@ try:
             img_copy = img.copy()
             img_copy = cv2.cvtColor(img, cv2.COLOR_BayerRG2RGB)
 
-            results = model.predict(img_copy, save=False, imgsz=1664, conf=0.50)
+            results = model.predict(img_copy, save=False, imgsz=1664, conf=0.01)
             result = results[0]
 
             # Visualize the results on the frame
@@ -88,7 +88,7 @@ try:
                 # modbus.write_detected(start)
             else:
                 # Break the loop if the end of the video is reached
-                print('no detacted')
+                pqrint('no detacted')
                 # modbus.write_detected([0,0,0])
 
             # Break the loop if 'q' is pressed
