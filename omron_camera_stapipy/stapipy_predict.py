@@ -14,10 +14,19 @@
 """
 
 import cv2
-import threading
-import numpy as np
+from ultralytics import YOLO
+import sys
+sys.path.append('')
+
+import format_date_time as date
+import LS_Modbus as modbus
+import os
+
 import stapipy as st
 import omron_callback as oc
+
+# Load the YOLOv8 model
+model = YOLO('models\\1664_four_class_annotation-2-1_19-seg.pt')  # pretrained YOLOv8n model
 
 if __name__ == "__main__":
     my_callback = oc.CMyCallback()
@@ -39,8 +48,9 @@ if __name__ == "__main__":
             print(devicecount)
             for j in range(0, devicecount) :
                 device_info = st_interface.get_device_info(j)
-                # if(device_info.serial_number == "23G7069") : # - 1024 camera left
-                if(device_info.serial_number == "22FK019") : # - 1664 camera right
+                if(device_info.serial_number == "23G7076") : # - 1024 camera left
+                # if(device_info.serial_number == "23G7069") : # - 1024 camera right
+                # if(device_info.serial_number == "22FK019") : # - 1664 camera left
                     str_device_id = device_info.device_id
                     is_find = 1
                     break
@@ -70,11 +80,21 @@ if __name__ == "__main__":
         while True:
             output_image = my_callback.image
             if output_image is not None:
-                cv2.imshow('image', output_image)
-            # key_input = cv2.waitKey(1)
-            # if key_input != -1:
-            #     break
-                
+
+                img_copy = output_image.copy()
+                img_copy = cv2.cvtColor(output_image, cv2.COLOR_BayerRG2RGB)
+
+                # Run YOLOv8 inference on the frame
+                results = model.predict(img_copy, save=False, imgsz=1024, conf=0.5)
+                result = results[0]
+
+                # Visualize the results on the frame
+                annotated_frame = results[0].plot()
+
+                # Display the annotated frame
+                imS = cv2.resize(annotated_frame, (640, 640)) 
+                cv2.imshow("YOLOv8 Inference", imS)
+
             # Press 'q' to quit
             if cv2.waitKey(1) & 0xFF == ord('q'):
               break
