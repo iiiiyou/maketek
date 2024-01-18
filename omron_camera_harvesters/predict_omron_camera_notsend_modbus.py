@@ -1,5 +1,7 @@
 import cv2
 from ultralytics import YOLO
+import sys
+sys.path.append('')
 import format_date_time as date
 import LS_Modbus as modbus
 import os
@@ -49,7 +51,7 @@ try:
             img_copy = img.copy()
             img_copy = cv2.cvtColor(img, cv2.COLOR_BayerRG2RGB)
 
-            results = model.predict(img_copy, save=False, imgsz=1664, conf=0.50)
+            results = model.predict(img_copy, save=False, imgsz=1664, conf=0.10)
             result = results[0]
 
             # Visualize the results on the frame
