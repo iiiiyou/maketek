@@ -1,8 +1,7 @@
 import cv2
 from ultralytics import YOLO
-import format_date_time as date
-import LS_Modbus as modbus
-import os
+import sys
+sys.path.append('')
 
 from harvesters.core import Harvester
 import sys
@@ -10,6 +9,9 @@ import traceback
 import time
 import sys
 import numpy
+import format_date_time as date
+import LS_Modbus as modbus
+import os
 # numpy.set_printoptions(threshold=sys.maxsize)
 
 h = Harvester()
@@ -41,7 +43,7 @@ def makedirs(path):
 #count
 def count_fire(detected_a):
 
-    if len(detected_a) > 10:
+    if len(detected_a) > 7:
         detected_a.pop(0)  # Remove the first element
     
         if detected_a.count(1) > 3:
@@ -65,7 +67,7 @@ def count_fire(detected_a):
                     img_copy2 = cv2.cvtColor(img2, cv2.COLOR_BayerRG2RGB)
 
 
-                    results2 = model.predict(img_copy2, save=False, imgsz=1664, conf=0.01)
+                    results2 = model.predict(img_copy2, save=False, imgsz=1664, conf=0.85)
                     result2 = results2[0]
 
                     # Visualize the results on the frame
@@ -88,11 +90,11 @@ def count_fire(detected_a):
                 # Saving images
                 cv2.imwrite('detect_image\\'+date.format_date()+'\\'+date.get_time_in_mmddss()+'.jpg', imS)
 
-                # modbus.write_detected(start2)
+                modbus.write_detected(start2)
 
                 global detected_list
 
-                detected_list=[0,0,0,0,0,0,0,0,0,0]
+                detected_list=[0,0,0,0,0,0,0]
                 print(detected_list)
                 print("--")
 
@@ -106,7 +108,8 @@ def count_fire(detected_a):
 
 
 # Load the YOLOv8 model
-model = YOLO('models\\1664_four_class_annotation-2-1_19-seg.pt')  # pretrained YOLOv8n model
+# model = YOLO('models\\1664_four_class_annotation-2-1_19-seg.pt')  # pretrained YOLOv8n model
+model = YOLO('models\\1664_4class_merge-1-2.pt')  # pretrained YOLOv8n model
 # model = YOLO('models\\1664_two_class_annotation-1_seg-1.pt')  # pretrained YOLOv8n model
         
 
@@ -124,7 +127,7 @@ try:
             img_copy = img.copy()
             img_copy = cv2.cvtColor(img, cv2.COLOR_BayerRG2RGB)
 
-            results = model.predict(img_copy, save=False, imgsz=1664, conf=0.01)
+            results = model.predict(img_copy, save=False, imgsz=1664, conf=0.85)
             result = results[0]
 
             # Visualize the results on the frame

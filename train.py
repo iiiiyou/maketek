@@ -26,7 +26,7 @@ if __name__ == '__main__':
     print("training start")
     # data.yaml안에 있는 경로 기본 설정 "C:\Users\<user>\AppData\Roaming\Ultralytics\settings.yaml"
     # datasets_dir: C:\workspace\maketek "in settings.yaml"
-    results = model.train(data="datasets\\"+dataset_name+"\\data.yaml", epochs=300, imgsz=640)
+    results = model.train(data="datasets\\"+dataset_name+"\\data.yaml", epochs=300, imgsz=640, workers=0)
 
     # data.yaml 안의 image파일 경로
     # test: test/images

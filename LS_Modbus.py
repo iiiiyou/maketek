@@ -20,15 +20,20 @@ def write_detected(values):
   """
 
   try:
+    print('11111111111111')
     val = inter.alignment(values)
-    print('----------------')
+    print('22222222222222')
     print(val)
+    print('33333333333333')
     client = ModbusTcpClient("192.168.1.2", port=502)
+    print('44444444444444')
     return1 = client.write_registers(0x0009,val,1)
-    client.close()
-    print("modbus--------------sss")
     print(return1)
-    print("modbusend---------------")
+    print('55555555555555')
+    client.close()
+    print('66666666666666')
+    # print(return1)
+    print('77777777777777')
     return True
   except Exception as e:
     print(e)
