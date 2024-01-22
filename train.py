@@ -4,12 +4,12 @@ import shutil
 
 from roboflow import Roboflow
 
-dataset_name = "1664_two_class_annotation-2-1"
+dataset_name = "1664_4class_merge-1-1"
 if not os.path.exists("datasets\\"+dataset_name):
 
     from roboflow import Roboflow
     rf = Roboflow(api_key="bxW7hooY5jiknZS3GIxI")
-    project = rf.workspace("i4umaket").project("1664_two_class_annotation-2")
+    project = rf.workspace("i4umaket").project("1664_4class_merge-1")
     dataset = project.version(1).download("yolov8")
 
     shutil.move(dataset_name, "datasets\\"+dataset_name)
