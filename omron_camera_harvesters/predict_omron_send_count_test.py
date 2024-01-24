@@ -76,6 +76,11 @@ def count_fire(detected_a):
                     # img_copy = img.copy()
                     # img_copy = cv2.cvtColor(img, cv2.COLOR_BayerRG2RGB)
                     # cv2.namedWindow("window", cv2.WINDOW_KEEPRATIO | cv2.WINDOW_NORMAL)
+                    print("=======================================",i)
+                    print("=======================================",i)
+                    print("=======================================",i)
+                    print("=======================================",i)
+                    print("=======================================",i)
                     imS2 = cv2.resize(annotated_frame2, (640, 640)) 
                     cv2.imshow("YOLOv8 Inference2", imS2)
                 
@@ -95,12 +100,22 @@ def count_fire(detected_a):
                 global detected_list
 
                 detected_list=[0,0,0,0,0,0,0]
+                # print('detacted')
+                # print('time.sleep(0.5) - detacted')
+                # print('time.sleep(0.5) - detacted')
+                # print('time.sleep(0.5) - detacted')
+                # time.sleep(0.5)
+                modbus.write_detected([0,0,0])
                 print(detected_list)
                 print("--")
 
             else:
                 # Break the loop if the end of the video is reached
                 print('no detacted')
+                # print('time.sleep(0.5) - no no no')
+                # print('time.sleep(0.5) - no no no')
+                # print('time.sleep(0.5) - no no no')
+                # time.sleep(0.5)
                 modbus.write_detected([0,0,0])
                 return 0
 
@@ -160,7 +175,7 @@ try:
             else:
                 # Break the loop if the end of the video is reached
                 detected_list.append(0)
-                modbus.write_detected([0,0,0])
+                # modbus.write_detected([0,0,0])
                 print('no detacted')
 
             print("detect_list: ", detected_list)
