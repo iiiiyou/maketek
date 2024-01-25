@@ -50,7 +50,7 @@ def count_fire(detected_a):
     if len(detected_a) > 7:
         detected_a.pop(0)  # Remove the first element
     
-        if detected_a.count(1) > 3:
+        if detected_a.count(1) > 0:
 
             
             #########################  
@@ -104,11 +104,6 @@ def count_fire(detected_a):
                 global detected_list
 
                 detected_list=[0,0,0,0,0,0,0]
-                # print('detacted')
-                # print('time.sleep(0.5) - detacted')
-                # print('time.sleep(0.5) - detacted')
-                # print('time.sleep(0.5) - detacted')
-                # time.sleep(0.5)
                 modbus.write_detected([0,0,0], client)
                 print(detected_list)
                 print("--")
@@ -116,10 +111,6 @@ def count_fire(detected_a):
             else:
                 # Break the loop if the end of the video is reached
                 print('no detacted')
-                # print('time.sleep(0.5) - no no no')
-                # print('time.sleep(0.5) - no no no')
-                # print('time.sleep(0.5) - no no no')
-                # time.sleep(0.5)
                 modbus.write_detected([0,0,0], client)
                 return 0
 
