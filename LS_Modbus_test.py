@@ -41,7 +41,6 @@ def write_detected(values, client):
       print('--------------time.sleep(0.5)')
       time.sleep(0.5)
     else:
-      time.sleep(0.5)
       print('44444444444444-', val)
       return1 = client.write_registers(0x0009,val,1)
       print("-------------------------------sent ", val)
