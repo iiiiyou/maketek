@@ -1,7 +1,7 @@
 import cv2
 from ultralytics import YOLO
 import sys
-sys.path.append('')
+sys.path.append('C:/workspace/maketek')
 
 from harvesters.core import Harvester
 import sys
@@ -19,7 +19,7 @@ import os
 client = ModbusTcpClient("192.168.1.2", port=502)
 
 h = Harvester()
-h.add_file('C:\\Program Files\\Common Files\\OMRON_SENTECH\\GenTL\\v1_5\\StGenTL_MD_VC141_v1_5_x64.cti')
+h.add_file('C:/Program Files/Common Files/OMRON_SENTECH/GenTL/v1_5/StGenTL_MD_VC141_v1_5_x64.cti')
 h.files
 h.update()
 h.device_info_list
@@ -55,7 +55,7 @@ def count_fire(detected_a):
             
             #########################  
             # Make folders if not exsist
-            path='detect_image\\'+date.format_date()+'\\'
+            path='C:/workspace/maketek/detect_image/'+date.format_date()+'/'
             makedirs(path)
 
             modbus.write_detected([1,0,0], client) #send modbus [1,0,0] mean is stop vibration
@@ -97,7 +97,7 @@ def count_fire(detected_a):
                 start2.insert(0,1)
                 
                 # Saving images
-                cv2.imwrite('detect_image\\'+date.format_date()+'\\'+date.get_time_in_mmddss()+'.jpg', imS)
+                cv2.imwrite('C:/workspace/maketek/detect_image/'+date.format_date()+'/'+date.get_time_in_mmddss()+'.jpg', imS)
 
                 modbus.write_detected(start2, client)
 
@@ -118,9 +118,9 @@ def count_fire(detected_a):
 
 
 # Load the YOLOv8 model
-# model = YOLO('models\\1664_four_class_annotation-2-1_19-seg.pt')  # pretrained YOLOv8n model
-model = YOLO('models\\1664_4class_merge-1-2.pt')  # pretrained YOLOv8n model
-# model = YOLO('models\\1664_two_class_annotation-1_seg-1.pt')  # pretrained YOLOv8n model
+# model = YOLO('models/1664_four_class_annotation-2-1_19-seg.pt')  # pretrained YOLOv8n model
+# model = YOLO('C:/workspace/maketek/models/1664_four_class_annotation-2-1_19-seg.pt')  # pretrained YOLOv8n model
+model = YOLO('C:/workspace/maketek/models/1664_4class_merge-1-2.pt')  # pretrained YOLOv8n model
         
 
 try:
@@ -146,18 +146,22 @@ try:
             # img_copy = img.copy()
             # img_copy = cv2.cvtColor(img, cv2.COLOR_BayerRG2RGB)
             # cv2.namedWindow("window", cv2.WINDOW_KEEPRATIO | cv2.WINDOW_NORMAL)
-            imS = cv2.resize(annotated_frame, (640, 640)) 
-            cv2.imshow("YOLOv8 Inference", imS)
+            imS = cv2.resize(annotated_frame, (640, 640))
+
+            imS_put = cv2.putText(imS, str(detected_list), (10, 610), cv2.FONT_HERSHEY_SIMPLEX, \
+                               0.5, (0, 36, 255), 1, cv2.LINE_AA)
+            
+            cv2.imshow("YOLOv8 Inference", imS_put)
             fps = ia.statistics.fps
             print("FPS: ", fps)
 
             #########################  
             # Make folders if not exsist
-            # path='detect_image\\'+date.format_date()+'\\'
+            # path='detect_image/'+date.format_date()+'/'
             # makedirs(path)
 
             # Saving images
-            # cv2.imwrite('detect_image\\'+date.format_date()+'\\'+date.get_time_in_mmddss()+'.jpg', annotated_frame)
+            # cv2.imwrite('detect_image/'+date.format_date()+'/'+date.get_time_in_mmddss()+'.jpg', annotated_frame)
 
             
 
