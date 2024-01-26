@@ -2,10 +2,10 @@ import cv2
 from ultralytics import YOLO
 
 cap = cv2.VideoCapture(1)
-model = YOLO("yolov8n.pt") 
+model = YOLO("model/two_class_full_best_seg-4.pt") 
 
 # Define the four classes you want to detect (replace with your actual classes)
-class_ids = ['a', 'b', 'c', 'd'] 
+class_ids = ['0', '1', 'c', 'd'] 
 
 class Detector:
     def __init__(self):
@@ -19,8 +19,8 @@ class Detector:
         if len(self.detected_defects) > 10:
             self.detected_defects.pop(0)  # Remove the first element
         
-        a = self.detected_defects.count('a')
-        b = self.detected_defects.count('b')
+        a = self.detected_defects.count('0')
+        b = self.detected_defects.count('1')
         c = self.detected_defects.count('c')
         d = self.detected_defects.count('d')
 
@@ -69,10 +69,11 @@ while True:
 
         if detector.counts[0] > 3:
             message = f'type {class_id} is detected more than 3 times, take some actions'
+            print('a is more than 3')
 
         if detector.counts[1] > 5:
             message = f'type {class_id} is detected more than 5 times, take some actions'
-
+            print('b is more than 3')
 
         image = cv2.putText(frame, str(detector.detected_defects) , (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 1, cv2.LINE_AA)
 
