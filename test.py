@@ -1,11 +1,11 @@
 import cv2
 from ultralytics import YOLO
 
-cap = cv2.VideoCapture(1)
-model = YOLO("model/two_class_full_best_seg-4.pt") 
+cap = cv2.VideoCapture(0)
+model = YOLO('C:/workspace/maketek/models/1664_4class_merge-1-2.pt')  # pretrained YOLOv8n model
 
 # Define the four classes you want to detect (replace with your actual classes)
-class_ids = ['0', '1', 'c', 'd'] 
+class_ids = ['a', 'b', 'c', 'd'] 
 
 class Detector:
     def __init__(self):
@@ -19,8 +19,8 @@ class Detector:
         if len(self.detected_defects) > 10:
             self.detected_defects.pop(0)  # Remove the first element
         
-        a = self.detected_defects.count('0')
-        b = self.detected_defects.count('1')
+        a = self.detected_defects.count('a')
+        b = self.detected_defects.count('b')
         c = self.detected_defects.count('c')
         d = self.detected_defects.count('d')
 

@@ -28,10 +28,8 @@ def write_detected(values, client):
     # client = ModbusTcpClient("192.168.1.2", port=502)
     print('44444444444444')
     if val == [0, 0, 0]:
-      print('44444444444444-[1,0,0]')
-      return1 = client.write_registers(0x0009,[1, 0, 0],1)
-      print("-------------------------------sent [1,0,0]")
-      print("-------------------------------sent [1,0,0]")
+      # print('44444444444444-[1,0,0]')
+      # return1 = client.write_registers(0x0009,[1, 0, 0],1)
       # print('--------------time.sleep(0.5)')
       # time.sleep(0.5)
       print('44444444444444-[0,0,0]')
