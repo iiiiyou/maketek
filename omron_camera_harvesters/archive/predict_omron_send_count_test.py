@@ -152,6 +152,10 @@ try:
             # img_copy = cv2.cvtColor(img, cv2.COLOR_BayerRG2RGB)
             # cv2.namedWindow("window", cv2.WINDOW_KEEPRATIO | cv2.WINDOW_NORMAL)
             imS = cv2.resize(annotated_frame, (640, 640)) 
+            
+            cv2.putText(imS, str(detected_list), (10, 620), cv2.FONT_HERSHEY_SIMPLEX, \
+                            0.5, (0, 36, 255), 1, cv2.LINE_AA)
+            
             cv2.imshow("YOLOv8 Inference", imS)
             fps = ia.statistics.fps
             print("FPS: ", fps)
