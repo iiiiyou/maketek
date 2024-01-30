@@ -179,10 +179,7 @@ def alignment(val):
     # Interpolate the query points
         interpolated_values = interpolator(center_point)
 
-        print("inter----------------")
-
         z=1
 
-        print(interpolated_values)
         x, y = interpolated_values[0]
         return z, x, y
