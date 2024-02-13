@@ -150,7 +150,7 @@ def count_fire(detected_a):
 # model = YOLO('models/1664_four_class_annotation-2-1_19-seg.pt')  # pretrained YOLOv8n model
 # model = YOLO('C:/workspace/maketek/models/1664_four_class_annotation-2-1_19-seg.pt')  # pretrained YOLOv8n model
 # model = YOLO('C:/workspace/maketek/models/1664_4class_merge-1-2.pt')  # pretrained YOLOv8n model
-model = YOLO('C:/workspace/maketek/models/1664_four_class_annotation_20240202.pt')  # pretrained YOLOv8n model
+model = YOLO('C:/workspace/maketek/models/1664_four_class_annotation_20240213.pt')  # pretrained YOLOv8n model
         
 
 try:
@@ -218,12 +218,13 @@ try:
                 client.close()
             # i = i + 1
 except Exception as e:
+    modbus.write_detected([1,0,0], client)
     traceback.print_exc(file=sys.stdout)
 finally:
+    modbus.write_detected([1,0,0], client)
     ia.stop()
     ia.destroy()
-    cv2.destroyAllWindows()
-    modbus.write_detected([1,0,0], client)
+    cv2.destroyAllWindows() 
     print('fin')
     h.reset()
     client.close()
