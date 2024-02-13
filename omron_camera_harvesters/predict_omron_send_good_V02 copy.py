@@ -135,7 +135,8 @@ def count_fire(detected_a):
 # Load the YOLOv8 model
 # model = YOLO('models/1664_four_class_annotation-2-1_19-seg.pt')  # pretrained YOLOv8n model
 # model = YOLO('C:/workspace/maketek/models/1664_four_class_annotation-2-1_19-seg.pt')  # pretrained YOLOv8n model
-model = YOLO('C:/workspace/maketek/models/1664_4class_merge-1-2.pt')  # pretrained YOLOv8n model
+# model = YOLO('C:/workspace/maketek/models/1664_4class_merge-1-2.pt')  # pretrained YOLOv8n model
+model = YOLO('C:/workspace/maketek/models/1664_four_class_annotation_20240202.pt')  # pretrained YOLOv8n model
         
 
 try:

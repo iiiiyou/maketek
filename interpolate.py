@@ -167,7 +167,7 @@ def alignment(val):
         val[2]=0
         return val
     
-    elif(val[1]==0):
+    elif(val[1]==0 and val[2]==0):
         z=1
         x=0
         y=0
