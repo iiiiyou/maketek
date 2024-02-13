@@ -219,6 +219,7 @@ try:
             # i = i + 1
 except Exception as e:
     modbus.write_detected([1,0,0], client)
+    modbus.write_detected([2,0,0], client)
     traceback.print_exc(file=sys.stdout)
 finally:
     modbus.write_detected([1,0,0], client)
