@@ -26,9 +26,9 @@ h.device_info_list
 print(h.device_info_list)
 
 # ia = h.create(0)
-ia = h.create({'serial_number': '23G7076'}) # - 1080 camera left
+# ia = h.create({'serial_number': '23G7076'}) # - 1080 camera left
 # ia = h.create({'serial_number': '23G7069'}) # - 1080 camera right
-# ia = h.create({'serial_number': '22FK019'}) # - 2048 camera left
+ia = h.create({'serial_number': '22FK019'}) # - 2048 camera left
 
 ######  tkinter  start ######
 # Google search: Tkinter geometry site:www.geeksforgeeks.org
@@ -114,7 +114,7 @@ def count_fire(detected_a):
             makedirs(path)
 
             #send modbus [1,0,0] mean is stop vibration
-            # modbus.write_detected([1,0,0], client)
+            modbus.write_detected([1,0,0], client)
 
             for i in range(9):
                 with ia.fetch() as buffer2:
@@ -126,7 +126,7 @@ def count_fire(detected_a):
                     img_copy2 = cv2.cvtColor(img2, cv2.COLOR_BayerRG2RGB)
 
 
-                    results2 = model.predict(img_copy2, save=False, imgsz=320, conf=0.30)
+                    results2 = model.predict(img_copy2, save=False, imgsz=1664, conf=0.85)
                     result2 = results2[0]
 
                     # Visualize the results on the frame
@@ -166,15 +166,15 @@ def count_fire(detected_a):
                     # Saving images
                     cv2.imwrite('C:/workspace/maketek/detect_image/'+date.format_date()+'/'+date.get_time_in_mmddss()+'.jpg', imS2)
 
-                    # modbus.write_detected(start2, client)
+                    modbus.write_detected(start2, client)
 
-                    # modbus.write_detected([0,0,0], client)
+                    modbus.write_detected([0,0,0], client)
 
             detector.detected_defects=['x','x','x','x','x','x','x','x','x','x']
 
             
             # Break the loop if the end of the video is reached
-            # modbus.write_detected([0,0,0], client)
+            modbus.write_detected([0,0,0], client)
 
 def open_camera(): 
     if cam_on:
@@ -182,7 +182,7 @@ def open_camera():
     ######  tkinter  start ######
         ia.start()
         # i = 0
-    # modbus.write_detected([0,0,0], client)
+        modbus.write_detected([0,0,0], client)
         with ia.fetch() as buffer:
             # Work with the Buffer object. It consists of everything you need.
             # The buffer will automatically be queued.
@@ -191,7 +191,7 @@ def open_camera():
             img_copy = img.copy()
             img_copy = cv2.cvtColor(img, cv2.COLOR_BayerRG2RGB)
 
-            results = model.predict(img_copy, save=False, imgsz=320, conf=0.30)
+            results = model.predict(img_copy, save=False, imgsz=1664, conf=0.85)
             result = results[0]
 
             # Visualize the results on the frame
@@ -248,13 +248,13 @@ def open_camera():
 
 def start_cam():
     global cam_on
-    stop_cam()
+    # stop_cam()
     cam_on = True
     open_camera()
 
 def stop_cam():
     global cam_on
-    # modbus.write_detected([1,0,0], client)
+    modbus.write_detected([1,0,0], client)
     print("Sent modbus [1,0,0]")
     cam_on = False
 
@@ -291,12 +291,16 @@ try:
     print("Camera is released")
 except Exception as e:
     print(f"Error opening webcam: {e}")
+    modbus.write_detected([1,0,0], client)
+    print("Sent modbus [1,0,0]")
+    modbus.write_detected([2,0,0], client)
+    print("Sent modbus [2,0,0]")
     traceback.print_exc(file=sys.stdout)
 finally:
     ia.stop()
     ia.destroy()
     cv2.destroyAllWindows()
-    # modbus.write_detected([1,0,0], client)
+    modbus.write_detected([1,0,0], client)
     print("Sent modbus [1,0,0]")
     h.reset()
     client.close()

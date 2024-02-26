@@ -106,7 +106,7 @@ def open_camera():
   
 def start_cam():
     global cam_on
-    stop_cam()
+    # stop_cam()
     cam_on = True
     open_camera()
 
