@@ -8,6 +8,13 @@ c:\> .venv\scripts\activate
 # https://docs.ultralytics.com/quickstart/
 (.venv) c:\> pip install ultralytics
 
+(.venv) c:\> pip install roboflow
+(.venv) c:\> pip install harvesters
+(.venv) c:\> pip install pymodbus
+
+(.venv) c:\> pip uninstall opencv-python
+(.venv) c:\> pip install opencv-python
+
 
 An exception occurred.
 File coaxlink.cti not found.

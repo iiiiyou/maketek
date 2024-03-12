@@ -11,7 +11,8 @@ import traceback
 import sys
   
 # Define a video capture object 
-vid = cv2.VideoCapture(0) 
+# vid = cv2.VideoCapture(0) 
+vid = cv2.VideoCapture("C:/workspace/maketek/mp4/test.mp4") 
   
 # Declare the width and height in variables 
 width, height = 800, 600
