@@ -88,7 +88,7 @@ try:
                 # modbus.write_detected(start)
             else:
                 # Break the loop if the end of the video is reached
-                pqrint('no detacted')
+                print('no detacted')
                 # modbus.write_detected([0,0,0])
 
             # Break the loop if 'q' is pressed

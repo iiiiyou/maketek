@@ -35,7 +35,7 @@ try:
         print("FPS: ", fps)
 
         
-        cv2.imwrite('images\\training\\1664(640)_'+date.get_time_in_mmddss()+'.jpg', img_copy)
+        cv2.imwrite('images\\training\\1664_'+date.get_time_in_mmddss()+'.jpg', img_copy)
 
         #########################  
         # Make folders if not exsist
