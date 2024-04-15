@@ -99,7 +99,7 @@ def makedirs(path):
         print("Error: Failed to create the directory.")
 
 # Load the YOLOv8 model
-model = YOLO('C:/workspace/maketek/models/best_top_1664_four_class-2_20240318.pt')  # pretrained YOLOv8n model
+model = YOLO('C:/workspace/maketek/models/best_top_1664_four_class-2-1_20240412.pt')  # pretrained YOLOv8n model
  
 detector = Detector()
 
@@ -110,7 +110,11 @@ def count_fire(detected_a):
         if detector.counts[0] > 2 or detector.counts[1] > 2 or detector.counts[2] > 2 or detector.counts[3] > 2:
         
             # Make folders if not exsist
-            path='C:/workspace/maketek/detect_image/'+date.format_date()+'/'
+            path='C:/Users/user/Desktop/detected_image/'+date.format_date()+'/'
+            makedirs(path)
+            path='C:/Users/user/Desktop/detected_image/'+date.format_date()+'/Original/'
+            makedirs(path)
+            path='C:/Users/user/Desktop/detected_image/'+date.format_date()+'/box/'
             makedirs(path)
 
             #send modbus [1,0,0] mean is stop vibration
@@ -164,7 +168,8 @@ def count_fire(detected_a):
                     ######  tkinter  end   ######
 
                     # Saving images
-                    cv2.imwrite('C:/workspace/maketek/detect_image/'+date.format_date()+'/'+date.get_time_in_mmddss()+'.jpg', imS2)
+                    cv2.imwrite('C:/Users/user/Desktop/detected_image/'+date.format_date()+'/box/'+date.get_time_in_mmddss()+'.jpg', annotated_frame2)
+                    cv2.imwrite('C:/Users/user/Desktop/detected_image/'+date.format_date()+'/Original/'+date.get_time_in_mmddss()+'_Original.jpg', img_copy2)
 
                     modbus.write_detected(start2, client)
 

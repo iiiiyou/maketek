@@ -57,5 +57,3 @@ finally:
     cv2.destroyAllWindows()
     print('fin')
     h.reset()
-
-    
