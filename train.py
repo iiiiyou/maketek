@@ -4,11 +4,11 @@ import shutil
 
 from roboflow import Roboflow
 
-dataset_name = "top_1664_four_class-2-1"
+dataset_name = "top_1664_four_class-4-1"
 if not os.path.exists("datasets\\"+dataset_name):
-
+    
     rf = Roboflow(api_key="bxW7hooY5jiknZS3GIxI")
-    project = rf.workspace("i4umaket").project("top_1664_four_class-2")
+    project = rf.workspace("i4umaket").project("top_1664_four_class-4")
     version = project.version(1)
     dataset = version.download("yolov8")
 

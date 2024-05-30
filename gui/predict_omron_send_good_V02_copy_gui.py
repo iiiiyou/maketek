@@ -99,7 +99,7 @@ def makedirs(path):
         print("Error: Failed to create the directory.")
 
 # Load the YOLOv8 model
-model = YOLO('C:/workspace/maketek/models/best_top_1664_four_class-2-1_20240412.pt')  # pretrained YOLOv8n model
+model = YOLO('C:/workspace/maketek/models/20250530_best.pt')  # pretrained YOLOv8n model
  
 detector = Detector()
 
