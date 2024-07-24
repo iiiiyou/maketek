@@ -118,7 +118,7 @@ def count_fire(detected_a):
             makedirs(path)
 
             #send modbus [1,0,0] mean is stop vibration
-            modbus.write_detected([1,0,0], client)
+            # modbus.write_detected([1,0,0], client)
 
             for i in range(9):
                 with ia.fetch() as buffer2:
@@ -130,7 +130,7 @@ def count_fire(detected_a):
                     img_copy2 = cv2.cvtColor(img2, cv2.COLOR_BayerRG2RGB)
 
 
-                    results2 = model.predict(img_copy2, save=False, imgsz=1664, conf=0.90)
+                    results2 = model.predict(img_copy2, save=False, imgsz=1664, conf=0.50)
                     result2 = results2[0]
 
                     # Visualize the results on the frame
@@ -171,7 +171,7 @@ def count_fire(detected_a):
                     cv2.imwrite('C:/Users/user/Desktop/detected_image/'+date.format_date()+'/box/'+date.get_time_in_mmddss()+'.jpg', annotated_frame2)
                     cv2.imwrite('C:/Users/user/Desktop/detected_image/'+date.format_date()+'/Original/'+date.get_time_in_mmddss()+'_Original.jpg', img_copy2)
 
-                    modbus.write_detected(start2, client)
+                    # modbus.write_detected(start2, client)
 
                     modbus.write_detected([0,0,0], client)
 
@@ -196,7 +196,7 @@ def open_camera():
             img_copy = img.copy()
             img_copy = cv2.cvtColor(img, cv2.COLOR_BayerRG2RGB)
 
-            results = model.predict(img_copy, save=False, imgsz=1664, conf=0.90)
+            results = model.predict(img_copy, save=False, imgsz=1664, conf=0.50)
             result = results[0]
 
             # Visualize the results on the frame
@@ -259,8 +259,8 @@ def start_cam():
 
 def stop_cam():
     global cam_on
-    modbus.write_detected([1,0,0], client)
-    print("Sent modbus [1,0,0]")
+    # modbus.write_detected([1,0,0], client)
+    # print("Sent modbus [1,0,0]")
     cam_on = False
 
 
@@ -296,17 +296,17 @@ try:
     print("Camera is released")
 except Exception as e:
     print(f"Error opening webcam: {e}")
-    modbus.write_detected([1,0,0], client)
-    print("Sent modbus [1,0,0]")
-    modbus.write_detected([2,0,0], client)
-    print("Sent modbus [2,0,0]")
+    # modbus.write_detected([1,0,0], client)
+    # print("Sent modbus [1,0,0]")
+    # modbus.write_detected([2,0,0], client)
+    # print("Sent modbus [2,0,0]")
     traceback.print_exc(file=sys.stdout)
 finally:
     ia.stop()
     ia.destroy()
     cv2.destroyAllWindows()
-    modbus.write_detected([1,0,0], client)
-    print("Sent modbus [1,0,0]")
+    # modbus.write_detected([1,0,0], client)
+    # print("Sent modbus [1,0,0]")
     h.reset()
     client.close()
     print('fin')
