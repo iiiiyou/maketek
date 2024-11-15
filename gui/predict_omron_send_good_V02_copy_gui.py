@@ -24,6 +24,7 @@ h.files
 h.update()
 h.device_info_list
 print(h.device_info_list)
+confvalue = 0.60
 
 # ia = h.create(0)
 # ia = h.create({'serial_number': '23G7076'}) # - 1080 camera left
@@ -58,7 +59,7 @@ label_widget2.place(x=3, y=47)
 
 ######  tkinter  end   ######
 
-client = ModbusTcpClient("192.168.1.2", port=502)
+client = ModbusTcpClient("192.168.200.2", port=502)
 
 # Define the four classes you want to detect (replace with your actual classes)
 class_ids = ['a', 'b', 'c', 'd', 'x'] 
@@ -99,7 +100,7 @@ def makedirs(path):
         print("Error: Failed to create the directory.")
 
 # Load the YOLOv8 model
-model = YOLO('C:/workspace/maketek/models/20240709_best.pt')  # pretrained YOLOv8n model
+model = YOLO('C:/workspace/maketek/models/20240725_best.pt')  # pretrained YOLOv8n model
  
 detector = Detector()
 
@@ -130,7 +131,7 @@ def count_fire(detected_a):
                     img_copy2 = cv2.cvtColor(img2, cv2.COLOR_BayerRG2RGB)
 
 
-                    results2 = model.predict(img_copy2, save=False, imgsz=1664, conf=0.90)
+                    results2 = model.predict(img_copy2, save=False, imgsz=1664, conf=confvalue)
                     result2 = results2[0]
 
                     # Visualize the results on the frame
@@ -196,7 +197,7 @@ def open_camera():
             img_copy = img.copy()
             img_copy = cv2.cvtColor(img, cv2.COLOR_BayerRG2RGB)
 
-            results = model.predict(img_copy, save=False, imgsz=1664, conf=0.90)
+            results = model.predict(img_copy, save=False, imgsz=1664, conf=confvalue)
             result = results[0]
 
             # Visualize the results on the frame
