@@ -28,9 +28,9 @@ confidence = 0.8
 reset_confidence = 0.8
 
 # ia = h.create(0)
-ia = h.create({'serial_number': '23G7076'}) # - 1080 camera left
+# ia = h.create({'serial_number': '23G7076'}) # - 1080 camera left
 # ia = h.create({'serial_number': '23G7069'}) # - 1080 camera right
-# ia = h.create({'serial_number': '22FK019'}) # - 2048 camera left
+ia = h.create({'serial_number': '22FK019'}) # - 2048 camera left
 
 ######  tkinter  start ######
 # Google search: Tkinter geometry site:www.geeksforgeeks.org
@@ -166,7 +166,8 @@ def catpure_dir_make():
 catpure_dir_make()
 
 # Load the YOLOv8 model
-model = YOLO('C:/workspace/maketek/models/20240725_best.pt')  # pretrained YOLOv8n model
+# model = YOLO('C:/workspace/maketek/models/20240725_best.pt')  # pretrained YOLOv8n model
+model = YOLO('C:/workspace/maketek/models/maketech-7-1_3rd_20250131_yolov8m-seg_best.pt')  # pretrained YOLOv8n model
  
 detector = Detector()
 

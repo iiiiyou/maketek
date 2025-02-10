@@ -161,6 +161,7 @@ def is_detected(x):
         return True
 
 # Load the YOLOv8 model
+# model = YOLO('C:/workspace/maketek/models/20240725_best.pt')  # pretrained YOLOv8n model
 model = YOLO('C:/workspace/maketek/models/maketech-7-1_3rd_20250131_yolov8m-seg_best.pt')  # pretrained YOLOv8n model
  
 detector = Detector()
@@ -318,9 +319,8 @@ def open_camera():
             # cv2.imwrite('detect_image/'+date.format_date()+'/'+date.get_time_in_mmddss()+'.jpg', annotated_frame)
             # count_fire(detector.detected_defects)
 
-            for box in result[0].boxes:
+            for box in result.boxes:
                 x1, y1, x2, y2 = box.xyxy[0]
-
                 if is_detected((x1, y1))== True:
                     count_fire(detector.detected_defects)
                 else:
