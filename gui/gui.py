@@ -142,8 +142,26 @@ def makedirs(path):
     except OSError:
         print("Error: Failed to create the directory.")
 
+detected = []
+
+# 이전과 현재가 바뀌었나 확인
+def is_detected(x):
+    if (x in detected):
+        file_path = "C:/source/log/"+str(date.get_date_in_yyyymmdd())+"_detected.txt"
+        # duplicated = str(date.get_date_time()) + ": " + str(x) + ", "
+        duplicated = str(x) + ", "
+        # with open(file_path, "a") as file:
+        #     # file.write(duplicated + "\n")
+        #     file.write(duplicated)
+        return False
+    else:
+        if len(detected) >= 30:
+            detected.pop(0)
+        detected.append(x)
+        return True
+
 # Load the YOLOv8 model
-model = YOLO('C:/workspace/maketek/models/20241114_best.pt')  # pretrained YOLOv8n model
+model = YOLO('C:/workspace/maketek/models/maketech-7-1_3rd_20250131_yolov8m-seg_best.pt')  # pretrained YOLOv8n model
  
 detector = Detector()
 
@@ -185,7 +203,8 @@ def count_fire(detected_a):
                     # cv2.namedWindow("window", cv2.WINDOW_KEEPRATIO | cv2.WINDOW_NORMAL)
                     imS2 = cv2.resize(annotated_frame2, (640, 640)) 
 
-                
+                xy = []
+
             # Modbus write
                 if(i > 5 and len(result2.boxes)!=0):
                     cords2 = result2.boxes.xyxy[0].tolist()
@@ -297,7 +316,15 @@ def open_camera():
 
             # Saving images
             # cv2.imwrite('detect_image/'+date.format_date()+'/'+date.get_time_in_mmddss()+'.jpg', annotated_frame)
-            count_fire(detector.detected_defects)
+            # count_fire(detector.detected_defects)
+
+            for box in result[0].boxes:
+                x1, y1, x2, y2 = box.xyxy[0]
+
+                if is_detected((x1, y1))== True:
+                    count_fire(detector.detected_defects)
+                else:
+                    print("duplicated")
 
 
             ######  tkinter  start ######
