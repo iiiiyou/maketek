@@ -24,8 +24,8 @@ h.files
 h.update()
 h.device_info_list
 print(h.device_info_list)
-confidence = 0.70
-reset_confidence = 0.70
+confidence = 0.6
+reset_confidence = 0.6
 
 # ia = h.create(0)
 # ia = h.create({'serial_number': '23G7076'}) # - 1080 camera left
@@ -155,7 +155,7 @@ def is_detected(x):
         #     file.write(duplicated)
         return False
     else:
-        if len(detected) >= 100:
+        if len(detected) >= 30:
             detected.pop(0)
         detected.append(x)
         return True
@@ -214,8 +214,8 @@ def count_fire(detected_a):
                     for box in result2.boxes:
                         x1, y1, x2, y2 = box.xyxy[0]
                         xy.append([1,int(x1),int(y1)])
-                        # print(xy)
-                    xy.sort()
+                        print(xy)
+
                     # start2 = cords2[0:2]  # x1,y1
 
                     # start2.insert(0,1)

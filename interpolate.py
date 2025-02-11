@@ -303,6 +303,10 @@ def alignment(val):
 
     # Create the NearestNDInterpolator object
     interpolator = NearestNDInterpolator(source_points, target_points)
+    interpolated_values = []
+    
+    result = []
+
 
     if(val[0]==0):
         val[1]=0
@@ -320,14 +324,22 @@ def alignment(val):
         x=0
         y=0
         return z, x, y
-        
+    
     else:
-        center_point = val[1:3]
+        result.append(1)
+        for i in list(val):
+            center_point = i[1:3]
+            # print(i)
+            # print(center_point)
 
-    # Interpolate the query points
-        interpolated_values = interpolator(center_point)
+        # Interpolate the query points
+            print(interpolator(center_point))
+            interpolated_values = interpolator(center_point)
+            x, y = interpolated_values[0]
 
-        z=1
+            result.append(x)
+            result.append(y)
 
-        x, y = interpolated_values[0]
-        return z, x, y
+        print(result)
+        return result
+

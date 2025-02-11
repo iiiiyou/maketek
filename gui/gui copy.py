@@ -24,8 +24,8 @@ h.files
 h.update()
 h.device_info_list
 print(h.device_info_list)
-confidence = 0.70
-reset_confidence = 0.70
+confidence = 0.6
+reset_confidence = 0.6
 
 # ia = h.create(0)
 # ia = h.create({'serial_number': '23G7076'}) # - 1080 camera left
@@ -142,26 +142,8 @@ def makedirs(path):
     except OSError:
         print("Error: Failed to create the directory.")
 
-detected = []
-
-# 이전과 현재가 바뀌었나 확인
-def is_detected(x):
-    if (x in detected):
-        file_path = "C:/source/log/"+str(date.get_date_in_yyyymmdd())+"_detected.txt"
-        # duplicated = str(date.get_date_time()) + ": " + str(x) + ", "
-        duplicated = str(x) + ", "
-        # with open(file_path, "a") as file:
-        #     # file.write(duplicated + "\n")
-        #     file.write(duplicated)
-        return False
-    else:
-        if len(detected) >= 100:
-            detected.pop(0)
-        detected.append(x)
-        return True
-
 # Load the YOLOv8 model
-# model = YOLO('C:/workspace/maketek/models/20240725_best.pt')  # pretrained YOLOv8n model
+# model = YOLO('C:/workspace/maketek/models/20241114_best.pt')  # pretrained YOLOv8n model
 model = YOLO('C:/workspace/maketek/models/maketech-7-1_3rd_20250131_yolov8m-seg_best.pt')  # pretrained YOLOv8n model
  
 detector = Detector()
@@ -204,21 +186,14 @@ def count_fire(detected_a):
                     # cv2.namedWindow("window", cv2.WINDOW_KEEPRATIO | cv2.WINDOW_NORMAL)
                     imS2 = cv2.resize(annotated_frame2, (640, 640)) 
 
-                xy = []
-
+                
             # Modbus write
                 if(i > 5 and len(result2.boxes)!=0):
-                    # cords2 = result2.boxes.xyxy[0].tolist()
-                    # cords2 = [round(x) for x in cords2]
+                    cords2 = result2.boxes.xyxy[0].tolist()
+                    cords2 = [round(x) for x in cords2]
+                    start2 = cords2[0:2]  # x1,y1
 
-                    for box in result2.boxes:
-                        x1, y1, x2, y2 = box.xyxy[0]
-                        xy.append([1,int(x1),int(y1)])
-                        # print(xy)
-                    xy.sort()
-                    # start2 = cords2[0:2]  # x1,y1
-
-                    # start2.insert(0,1)
+                    start2.insert(0,1)
                     
                     # cv2.imshow("YOLOv8 Inference2", imS2)
 
@@ -241,7 +216,7 @@ def count_fire(detected_a):
                     cv2.imwrite('C:/Users/user/Desktop/detected_image/'+date.format_date()+'/box/'+date.get_time_in_mmddss()+'.jpg', annotated_frame2)
                     cv2.imwrite('C:/Users/user/Desktop/detected_image/'+date.format_date()+'/Original/'+date.get_time_in_mmddss()+'_Original.jpg', img_copy2)
 
-                    modbus.write_detected(xy, client)
+                    modbus.write_detected(start2, client)
 
                     modbus.write_detected([0,0,0], client)
 
@@ -323,14 +298,7 @@ def open_camera():
 
             # Saving images
             # cv2.imwrite('detect_image/'+date.format_date()+'/'+date.get_time_in_mmddss()+'.jpg', annotated_frame)
-            # count_fire(detector.detected_defects)
-
-            for box in result.boxes:
-                x1, y1, x2, y2 = box.xyxy[0]
-                if is_detected((x1, y1))== True:
-                    count_fire(detector.detected_defects)
-                else:
-                    print("duplicated")
+            count_fire(detector.detected_defects)
 
 
             ######  tkinter  start ######

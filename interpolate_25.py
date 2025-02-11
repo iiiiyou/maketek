@@ -326,6 +326,7 @@ def alignment(val):
         return z, x, y
     
     else:
+        result.append(1)
         for i in list(val):
             center_point = i[1:3]
             print(i)
@@ -336,9 +337,9 @@ def alignment(val):
             interpolated_values = interpolator(center_point)
             x, y = interpolated_values[0]
 
-            result.append([x,y])
+            result.append(x)
+            result.append(y)
 
-        z = 1
         print(result)
-        return z, result
+        return result
 

@@ -64,4 +64,11 @@ def write_detected(values, client):
 
 # # Write 1 to register 0
 # write_detected([1,x,y])
-  
+if __name__ == "__main__":
+  # values = [1, 6, 6, 6, 10, 7, 4, 7, 1, 7, 8, 9, 8, 10, 5, 10, 7, 10, 2, 11, 7]
+  client = ModbusTcpClient("192.168.200.2", port=502)
+  # return1 = client.write_registers(0x0009,values,1)
+  # write_detected(values, client)
+  # val = inter.alignment_multi(values)
+  # print(val)
+  print(client)
