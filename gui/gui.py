@@ -243,13 +243,13 @@ def count_fire(detected_a):
 
                     modbus.write_detected(xy, client)
 
-                    modbus.write_detected([0,0,0], client)
+                    modbus.write_detected([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], client)
 
             detector.detected_defects=['x','x','x','x','x','x','x','x','x','x']
 
             
             # Break the loop if the end of the video is reached
-            modbus.write_detected([0,0,0], client)
+            modbus.write_detected([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], client)
 
 def open_camera(): 
     if cam_on:
@@ -257,7 +257,7 @@ def open_camera():
     ######  tkinter  start ######
         ia.start()
         # i = 0
-        modbus.write_detected([0,0,0], client)
+        modbus.write_detected([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], client)
         with ia.fetch() as buffer:
             # Work with the Buffer object. It consists of everything you need.
             # The buffer will automatically be queued.
@@ -323,14 +323,14 @@ def open_camera():
 
             # Saving images
             # cv2.imwrite('detect_image/'+date.format_date()+'/'+date.get_time_in_mmddss()+'.jpg', annotated_frame)
-            # count_fire(detector.detected_defects)
+            count_fire(detector.detected_defects)
 
-            for box in result.boxes:
-                x1, y1, x2, y2 = box.xyxy[0]
-                if is_detected((x1, y1))== True:
-                    count_fire(detector.detected_defects)
-                else:
-                    print("duplicated")
+            # for box in result.boxes:
+            #     x1, y1, x2, y2 = box.xyxy[0]
+            #     if is_detected((x1, y1))== True:
+            #         count_fire(detector.detected_defects)
+            #     else:
+            #         print("duplicated")
 
 
             ######  tkinter  start ######

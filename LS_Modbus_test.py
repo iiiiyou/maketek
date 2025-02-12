@@ -27,21 +27,21 @@ def write_detected(values, client):
     print('33333333333333')
     # client = ModbusTcpClient("192.168.1.2", port=502)
     print('44444444444444')
-    if val == [0, 0, 0]:
+    if val == [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]:
       # print('44444444444444-[1,0,0]')
       # return1 = client.write_registers(0x0009,[1, 0, 0],1)
       # print('--------------time.sleep(0.5)')
       # time.sleep(0.5)
-      print('44444444444444-[0,0,0]')
-      return1 = client.write_registers(0x0009,[0, 0, 0],1)
-      print("-------------------------------sent [0,0,0]")
-      print("-------------------------------sent [0,0,0]")
+      # print('44444444444444-[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]')
+      return1 = client.write_registers(0x0009, [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],1)
+      print("-------------------------------sent [0]")
+      # print("-------------------------------sent [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]")
       # print('--------------time.sleep(0.5)')
       # time.sleep(0.5)
     else:
-      print('44444444444444-', val)
+      # print('44444444444444-', val)
       return1 = client.write_registers(0x0009,val,1)
-      print("-------------------------------sent ", val)
+      # print("-------------------------------sent ", val)
       print("-------------------------------sent ", val)
       # print('--------------time.sleep(0.5)')
       # time.sleep(0.5)
@@ -65,9 +65,9 @@ def write_detected(values, client):
 # # Write 1 to register 0
 # write_detected([1,x,y])
 if __name__ == "__main__":
-  # values = [1, 6, 6, 6, 10, 7, 4, 7, 1, 7, 8, 9, 8, 10, 5, 10, 7, 10, 2, 11, 7]
+  values = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
   client = ModbusTcpClient("192.168.200.2", port=502)
-  # return1 = client.write_registers(0x0009,values,1)
+  return1 = client.write_registers(0x0009,values,1)
   # write_detected(values, client)
   # val = inter.alignment_multi(values)
   # print(val)

@@ -309,8 +309,9 @@ def alignment(val):
 
 
     if(val[0]==0):
-        val[1]=0
-        val[2]=0
+        # val[1]=0
+        # val[2]=0
+        print("val is 0")
         return val
     
     elif(val[0]==1 and val[1]==0 and val[2]==0):
@@ -340,6 +341,6 @@ def alignment(val):
             result.append(x)
             result.append(y)
 
-        print(result)
+        # print(result)
         return result
 
