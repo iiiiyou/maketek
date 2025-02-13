@@ -24,8 +24,8 @@ h.files
 h.update()
 h.device_info_list
 print(h.device_info_list)
-confidence = 0.70
-reset_confidence = 0.70
+confidence = 0.80
+reset_confidence = 0.80
 
 # ia = h.create(0)
 # ia = h.create({'serial_number': '23G7076'}) # - 1080 camera left
@@ -183,7 +183,7 @@ def count_fire(detected_a):
             #send modbus [1,0,0] mean is stop vibration
             modbus.write_detected([1,0,0], client)
 
-            for i in range(9):
+            for i in range(7):
                 with ia.fetch() as buffer2:
                     # Work with the Buffer object. It consists of everything you need.
                     # The buffer will automatically be queued.

@@ -3,9 +3,62 @@ from pymodbus.client import ModbusTcpClient
 import pymodbus
 import time
 import interpolate as inter
+import time
 
 
 # Example usage:
+# def extract_values(arr):
+#   """
+#   배열에서 값을 꺼내 반환하는 함수
+
+#   Args:
+#     arr: 값을 꺼낼 배열
+
+#   Yields:
+#     처음에는 3개, 이후에는 2개씩 값을 반환
+#   """
+#   if not arr:  # 빈 배열인 경우
+#     return
+
+#   # 처음 3개 값 반환
+#   yield arr[:3]
+#   arr = arr[3:]
+
+#   # 이후 2개씩 값 반환
+#   while arr:
+#     values = arr[:2]
+#     values.insert(0, 1)  # 1을 제일 앞에 추가
+#     yield values
+#     arr = arr[2:]
+
+def reset_array_elements(arr, client):
+    """
+    배열의 처음 값은 놔두고 1초마다 2번째 값부터 2개씩 0으로 초기화하는 함수
+
+    Args:
+        arr: 초기화할 배열
+    """
+
+    if not arr:
+        return
+
+    n = len(arr)
+    if n <= 1:
+        return
+    
+    client.write_registers(0x0009, arr, 1)
+    time.sleep(2)
+    for i in range(1, n, 2):
+      if i + 1 < n-3:
+        arr[i:i+2] = [0, 0]
+        client.write_registers(0x0009, arr, 1)
+        print(arr)
+        time.sleep(2)
+      else:
+        arr[i:i+2] = [0, 0]
+        client.write_registers(0x0009, arr, 1)
+        print(arr)
+        time.sleep(1)
 
 def write_detected(values, client):
   """Writes multiple registers to the PLC.
@@ -40,7 +93,10 @@ def write_detected(values, client):
       # time.sleep(0.5)
     else:
       # print('44444444444444-', val)
-      return1 = client.write_registers(0x0009,val,1)
+      if len(val) > 3:
+        reset_array_elements(val, client)
+      else:
+        return1 = client.write_registers(0x0009,val,1)
       # print("-------------------------------sent ", val)
       print("-------------------------------sent ", val)
       # print('--------------time.sleep(0.5)')
