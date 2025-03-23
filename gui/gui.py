@@ -162,7 +162,7 @@ def is_detected(x):
 
 # Load the YOLOv8 model
 # model = YOLO('C:/workspace/maketek/models/20240725_best.pt')  # pretrained YOLOv8n model
-model = YOLO('C:/workspace/maketek/models/maketech-7-1_3rd_20250131_yolov8m-seg_best.pt')  # pretrained YOLOv8n model
+model = YOLO('C:/workspace/maketek/models/maketech-8-1_20250323_yolov8m-seg_best.pt')  # pretrained YOLOv8n model
  
 detector = Detector()
 
